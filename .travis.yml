@@ -17,6 +17,7 @@ script:
 
 after_success:
   - cd ./cache
+  - ls
   - git init
 #  - git config user.name 'Travis CI'
 #  - git config user.email 'travis@travis-ci.com'
