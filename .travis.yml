@@ -22,8 +22,8 @@ after_success:
 #  - git config user.name 'Travis CI'
 #  - git config user.email 'travis@travis-ci.com'
   - git add .
-  - git ls-files
-  - export GIT_MSG=build-$TRAVIS_BRANCH-$(date -u "+%Y-%m-%d-%H-%M-%S")-$TRAVIS_BUILD_NUMBER
+#  - git ls-files
+  - export GIT_MSG=build-$TRAVIS_BRANCH-$(date -u "+%Y:%m:%d-%H:%M:%S")-$TRAVIS_BUILD_NUMBER
   - git commit -m $GIT_MSG
 #  - git commit -m "gen now"
   - git push --force --quiet "https://${GH_TOKEN}@github.com/fripSide/fripSide.github.io.git" master:master
