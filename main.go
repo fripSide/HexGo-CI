@@ -4,7 +4,7 @@ import (
 
 	//"fmt"
 	//"strconv"
-	"HexGo-CI/hexgo"
+	"hexgo"
 	"os"
 	"fmt"
 	"io/ioutil"
