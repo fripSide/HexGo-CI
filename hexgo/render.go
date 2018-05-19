@@ -69,7 +69,7 @@ func NewBlogTheme(confDir, cacheDir string) *BlogTheme {
 func (theme *BlogTheme) buildBlog() {
 	blogDir := path.Join(theme.confDir, "blog/")
 	blog := NewBlogList(blogDir)
-	//fmt.Println(blog)
+	fmt.Println(blog)
 	theme.cache = make(map[string]*PageCache)
 	theme.RequestMap = make(map[string][]byte)
 	theme.commonLinks = make(map[string]object)
