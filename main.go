@@ -2,7 +2,7 @@ package main
 
 import (
 
-	//"fmt"
+	"fmt"
 	//"strconv"
 	"github.com/fripSide/HexGo-CI/hexgo"
 	"os"
@@ -39,6 +39,7 @@ func GenBookCache() *hexgo.BlogTheme {
 	if err == nil {
 		dir = d + "/"
 	}
+    fmt.Println("Run Build In: ", dir)
 	//fmt.Println("Book Content: ", bookList.Books["go/"].Content)
 	confDir := path.Join(dir, "conf")
 	cacheDir := path.Join(dir, "cache")

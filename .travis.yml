@@ -8,6 +8,8 @@ go_import_path: github.com/fripSide/HexGo-CI/
 before_install:
   - go version
 
+sudo: true
+
 script:
   - rm -rf cache
   - mkdir cache
