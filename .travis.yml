@@ -23,6 +23,6 @@ after_success:
   - git config user.email 'travis@travis-ci.com'
   - git add .
   - git ls-files
-  - git commit -m 'Travis build: $TRAVIS_BUILD_NUMBER'
+  - git commit -m 'Travis build: ${TRAVIS_BUILD_NUMBER}'
   - git push --force --quiet "https://${GH_TOKEN}@github.com/fripSide/fripSide.github.io.git" master:master
 
