@@ -1,8 +1,6 @@
 package main
 
 import (
-
-	"fmt"
 	//"strconv"
 	"github.com/fripSide/HexGo-CI/hexgo"
 	"os"
