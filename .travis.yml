@@ -3,7 +3,7 @@ language: go
 go:
   - "1.10"
 
-go_import_path: hexgo
+go_import_path: github.com/fripSide/HexGo-CI/
 
 before_install:
   - go version
