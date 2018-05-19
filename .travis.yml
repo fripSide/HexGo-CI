@@ -1,10 +1,20 @@
 language: go
 
 go:
-  - "1.x"
-  - "1.8"
-  - "1.10.x"
-  - master
+  - "1.10"
 
 before_install:
   - go version
+
+script:
+  - go build
+
+after_success:
+  - cd ./cache
+  - git init
+  - git config user.name 'Travis CI'
+  - git config user.email 'travis@travis-ci.com'
+  - git add .
+  - git commit -m "deploy"
+  - git push --force --quiet "https://${GH_TOKEN}@github.com/fripSide/fripSide.github.io.git" master:master
+
