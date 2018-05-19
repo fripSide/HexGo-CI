@@ -1,0 +1,23 @@
+# 书的章节控制
+chapters:
+  - title: 第0章 安装
+    path: TEST.md
+    url: 00
+    date: 2018-02-12
+
+  - title: 第一章 安装
+    path: 01.0.md
+    url: 01
+    date: 2018-02-12
+#    type: free, pay
+#    cost: 2 # 2
+
+  - title: 第二章 语法
+    path: 01.1.md
+    url: 02
+    date: 2018-03-12
+
+  - title: 第三章 语法
+    path: 01.2.md
+    url: 03
+    date: 2018-03-12

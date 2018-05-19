@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="/static/images/icon.png">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css">
+    
+    <title></title>
+</head>
+<body>
+<script>
+    if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent))
+    {
+        document.body.classList.add('mobile');
+    }
+</script>
+<header>
+    <nav>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <label for="nav-toggle">
+                <span class="menu-icon">
+                    <svg viewBox="0 0 18 15" width="18px" height="15px">
+                        <path fill="white"
+                              d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                        <path fill="white"
+                              d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                        <path fill="white"
+                              d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                   </svg>
+              </span>
+        </label>
+        <a class="title" href="/">码农大陆 World of CodeMonkey</a>
+        <div class="nav-item">
+            <ul class="nav-start">
+            <li><a href="/lang">编程语言</a></li>
+            <li><a href="/game">游戏编程</a></li>
+            <li><a href="/book">读书笔记</a></li>
+            </ul>
+            <ul class="nav-end">
+                <li><a href="/about">关于</a></li>
+                <li><a href="#">捐赠</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+<div class="container">
+<div class="inner">
+
+<h1><a name="3-3-go如何使得web工作" class="anchor" href="#3-3-go%E5%A6%82%E4%BD%95%E4%BD%BF%E5%BE%97web%E5%B7%A5%E4%BD%9C" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3 Go如何使得Web工作</h1>
+
+<p>前面小节介绍了如何通过Go搭建一个Web服务，我们可以看到简单应用一个net/http包就方便的搭建起来了。那么Go在底层到底是怎么做的呢？万变不离其宗，Go的Web服务工作也离不开我们第一小节介绍的Web工作方式。</p>
+<h2><a name="web工作方式的几个概念" class="anchor" href="#web%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F%E7%9A%84%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+web工作方式的几个概念</h2>
+
+<p>以下均是服务器端的几个概念</p>
+
+<p>Request：用户请求的信息，用来解析用户的请求信息，包括post、get、cookie、url等信息</p>
+
+<p>Response：服务器需要反馈给客户端的信息</p>
+
+<p>Conn：用户的每次请求链接</p>
+
+<p>Handler：处理请求和生成返回信息的处理逻辑</p>
+<h2><a name="分析http包运行机制" class="anchor" href="#%E5%88%86%E6%9E%90http%E5%8C%85%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+分析http包运行机制</h2>
+
+<p>如下图所示，是Go实现Web服务的工作模式的流程图</p>
+
+<p><img src="/image/0day/3.3.http.png?raw=true" alt=""></p>
+
+<p>图3.9 http包执行流程</p>
+
+<ol>
+<li><p>创建Listen Socket, 监听指定的端口, 等待客户端请求到来。</p></li>
+
+<li><p>Listen Socket接受客户端的请求, 得到Client Socket, 接下来通过Client Socket与客户端通信。</p></li>
+
+<li><p>处理客户端的请求, 首先从Client Socket读取HTTP请求的协议头, 如果是POST方法, 还可能要读取客户端提交的数据, 然后交给相应的handler处理请求, handler处理完毕准备好客户端需要的数据, 通过Client Socket写给客户端。</p></li>
+</ol>
+
+<p>这整个的过程里面我们只要了解清楚下面三个问题，也就知道Go是如何让Web运行起来了</p>
+
+<ul>
+<li>如何监听端口？</li>
+<li>如何接收客户端请求？</li>
+<li>如何分配handler？</li>
+</ul>
+
+<p>前面小节的代码里面我们可以看到，Go是通过一个函数<code>ListenAndServe</code>来处理这些事情的，这个底层其实这样处理的：初始化一个server对象，然后调用了<code>net.Listen(&#34;tcp&#34;, addr)</code>，也就是底层用TCP协议搭建了一个服务，然后监控我们设置的端口。</p>
+
+<p>下面代码来自Go的http包的源码，通过下面的代码我们可以看到整个的http处理过程：</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">func</span> <span class="n">(</span><span class="n">srv</span> <span class="k">*</span><span class="n">Server</span><span class="n">)</span> <span class="n">Serve</span><span class="n">(</span><span class="n">l</span> <span class="n">net</span><span class="n">.</span><span class="n">Listener</span><span class="n">)</span> <span class="n">error</span> <span class="n">{</span>
+    <span class="k">defer</span> <span class="n">l</span><span class="n">.</span><span class="n">Close</span><span class="n">(</span><span class="n">)</span>
+    <span class="k">var</span> <span class="n">tempDelay</span> <span class="n">time</span><span class="n">.</span><span class="n">Duration</span> <span class="c">// how long to sleep on accept failure</span>
+    <span class="k">for</span> <span class="n">{</span>
+        <span class="n">rw</span><span class="n">,</span> <span class="n">e</span> <span class="k">:=</span> <span class="n">l</span><span class="n">.</span><span class="n">Accept</span><span class="n">(</span><span class="n">)</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+            <span class="k">if</span> <span class="n">ne</span><span class="n">,</span> <span class="n">ok</span> <span class="k">:=</span> <span class="n">e</span><span class="n">.</span><span class="n">(</span><span class="n">net</span><span class="n">.</span><span class="n">Error</span><span class="n">)</span><span class="n">;</span> <span class="n">ok</span> <span class="k">&amp;&amp;</span> <span class="n">ne</span><span class="n">.</span><span class="n">Temporary</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+                <span class="k">if</span> <span class="n">tempDelay</span> <span class="k">==</span> <span class="m">0</span> <span class="n">{</span>
+                    <span class="n">tempDelay</span> <span class="k">=</span> <span class="m">5</span> <span class="k">*</span> <span class="n">time</span><span class="n">.</span><span class="n">Millisecond</span>
+                <span class="n">}</span> <span class="k">else</span> <span class="n">{</span>
+                    <span class="n">tempDelay</span> <span class="k">*=</span> <span class="m">2</span>
+                <span class="n">}</span>
+                <span class="k">if</span> <span class="n">max</span> <span class="k">:=</span> <span class="m">1</span> <span class="k">*</span> <span class="n">time</span><span class="n">.</span><span class="n">Second</span><span class="n">;</span> <span class="n">tempDelay</span> <span class="k">&gt;</span> <span class="n">max</span> <span class="n">{</span>
+                    <span class="n">tempDelay</span> <span class="k">=</span> <span class="n">max</span>
+                <span class="n">}</span>
+                <span class="n">log</span><span class="n">.</span><span class="n">Printf</span><span class="n">(</span><span class="s">&#34;http: Accept error: %v; retrying in %v&#34;</span><span class="n">,</span> <span class="n">e</span><span class="n">,</span> <span class="n">tempDelay</span><span class="n">)</span>
+                <span class="n">time</span><span class="n">.</span><span class="n">Sleep</span><span class="n">(</span><span class="n">tempDelay</span><span class="n">)</span>
+                <span class="k">continue</span>
+            <span class="n">}</span>
+            <span class="k">return</span> <span class="n">e</span>
+        <span class="n">}</span>
+        <span class="n">tempDelay</span> <span class="k">=</span> <span class="m">0</span>
+        <span class="n">c</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">srv</span><span class="n">.</span><span class="n">newConn</span><span class="n">(</span><span class="n">rw</span><span class="n">)</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+            <span class="k">continue</span>
+        <span class="n">}</span>
+        <span class="k">go</span> <span class="n">c</span><span class="n">.</span><span class="n">serve</span><span class="n">(</span><span class="n">)</span>
+    <span class="n">}</span>
+<span class="n">}</span>
+
+</pre></div>
+
+<p>监控之后如何接收客户端的请求呢？上面代码执行监控端口之后，调用了<code>srv.Serve(net.Listener)</code>函数，这个函数就是处理接收客户端的请求信息。这个函数里面起了一个<code>for{}</code>，首先通过Listener接收请求，其次创建一个Conn，最后单独开了一个goroutine，把这个请求的数据当做参数扔给这个conn去服务：<code>go c.serve()</code>。这个就是高并发体现了，用户的每一次请求都是在一个新的goroutine去服务，相互不影响。</p>
+
+<p>那么如何具体分配到相应的函数来处理请求呢？conn首先会解析request:<code>c.readRequest()</code>,然后获取相应的handler:<code>handler := c.server.Handler</code>，也就是我们刚才在调用函数<code>ListenAndServe</code>时候的第二个参数，我们前面例子传递的是nil，也就是为空，那么默认获取<code>handler = DefaultServeMux</code>,那么这个变量用来做什么的呢？对，这个变量就是一个路由器，它用来匹配url跳转到其相应的handle函数，那么这个我们有设置过吗?有，我们调用的代码里面第一句不是调用了<code>http.HandleFunc(&#34;/&#34;, sayhelloName)</code>嘛。这个作用就是注册了请求<code>/</code>的路由规则，当请求uri为&#34;/&#34;，路由就会转到函数sayhelloName，DefaultServeMux会调用ServeHTTP方法，这个方法内部其实就是调用sayhelloName本身，最后通过写入response的信息反馈到客户端。</p>
+
+<p>详细的整个流程如下图所示：</p>
+
+<p><img src="/image/0day/3.3.illustrator.png?raw=true" alt=""></p>
+
+<p>图3.10 一个http连接处理流程</p>
+
+<p>至此我们的三个问题已经全部得到了解答，你现在对于Go如何让Web跑起来的是否已经基本了解呢？</p>
+<h2><a name="links" class="anchor" href="#links" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+links</h2>
+
+<ul>
+<li><a href="preface.md" rel="nofollow">目录</a></li>
+<li>上一节: <a href="/book/0day/6" rel="nofollow">GO搭建一个简单的web服务</a></li>
+<li>下一节: <a href="/book/0day/8" rel="nofollow">Go的http包详解</a></li>
+</ul>
+
+</div>
+</div>
+</main>
+<footer>
+    &copy; Copyright 2018 by 码农大陆 World of CodeMonkey.
+</footer>
+</body>
+</html>

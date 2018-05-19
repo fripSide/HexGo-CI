@@ -1,0 +1,7 @@
+books:
+  - path: 0day
+    url:  0day
+    local_image: images/ # 是否使用本地图片链接，本地图片的地址
+    title: 读书笔记
+    desc: 这里记录读书笔记
+    cover: images/cover.png

@@ -1,0 +1,14 @@
+books:
+  - path: learn_go
+    url:  go
+    local_image: images/ # 是否使用本地图片链接，本地图片的地址
+    title: Go语言学习教程
+    desc: Go语言学习教程描述
+    cover: images/cover.png
+
+  - url: book_test
+    path: book_test/
+    title: 测试书
+    local_image: images/
+    desc: 示例
+    cover: images/1.3.go.png

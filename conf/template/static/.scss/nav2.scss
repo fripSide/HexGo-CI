@@ -1,0 +1,96 @@
+
+header {
+  background: $nav-bg-color;
+  border-bottom: 1px solid $nav-border-color;
+  //box-shadow: $box-shadow;
+
+  nav {
+    display: flex;
+    font-size: 1.15em;
+    align-items: center;
+    height: 50px;
+
+    // 目录菜单
+    .nav-toggle {
+      display: none;
+    }
+
+    .menu-icon {
+      display: none;
+    }
+
+    // 标题
+    .title {
+      margin-left: 10px;
+      color: $hover-color;
+    }
+
+    // 菜单栏，嵌套div
+    .nav-item {
+      position: absolute;
+      left: 350px;
+      right: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    // 栏目和关于
+    .nav-start, .nav-end {
+      li {
+        display: inline-block;
+        padding: 0 10px;
+        a.active {
+          color: $hover-color;
+        }
+      }
+    }
+
+    .nav-end {
+      margin-left: auto;
+    }
+
+  }
+
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  header {
+    nav {
+      label[for="nav-toggle"] {
+        display: block;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      // 菜单隐藏
+      input ~ .nav-item {
+        clear: both;
+        display: none;
+      }
+
+      // 点击之后，菜单在下面展开
+      input:checked {
+        ~ .nav-item {
+          display: block;
+          position: absolute;
+          top: 50px;
+          left: 0;
+          right: 0;
+          background: $nav-bg-color;
+          border: 1px solid $nav-border-color;
+          border-radius: 5px;
+          li {
+            padding: 2px 5px;
+            display: block;
+          }
+        }
+
+      }
+    }
+  }
+
+}

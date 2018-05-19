@@ -1,0 +1,7 @@
+{{ define "content" -}}
+<h1>main</h1>
+<p>This is main</p>
+{{ range .Books -}}
+    <a href="{{ .Link }}">{{ .Title }}</a>
+{{ end -}}
+{{ end -}}

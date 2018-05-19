@@ -1,0 +1,30 @@
+chapters:
+  - path: 02.0.md
+    title: 测试章节2
+    url: 1
+    date: 2018-04-06
+
+  - path: 02.1.md
+    title: 测试章节4
+    url: 2
+    date: 2018-04-06
+
+  - path: 02.2.md
+    title: 测试章节5
+    url: 3
+    date: 2018-04-06
+
+  - path: 02.3.md
+    title: 测试章节5
+    url: 4
+    date: 2018-04-06
+
+  - path: 02.4.md
+    title: 测试章节5
+    url: 5
+    date: 2018-04-06
+
+  - path: 02.5.md
+    title: 测试章节5
+    url: 06
+    date: 2018-04-06

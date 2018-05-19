@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="/static/images/icon.png">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css">
+    
+    <title></title>
+</head>
+<body>
+<script>
+    if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent))
+    {
+        document.body.classList.add('mobile');
+    }
+</script>
+<header>
+    <nav>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <label for="nav-toggle">
+                <span class="menu-icon">
+                    <svg viewBox="0 0 18 15" width="18px" height="15px">
+                        <path fill="white"
+                              d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                        <path fill="white"
+                              d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                        <path fill="white"
+                              d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                   </svg>
+              </span>
+        </label>
+        <a class="title" href="/">码农大陆 World of CodeMonkey</a>
+        <div class="nav-item">
+            <ul class="nav-start">
+            <li><a href="/lang">编程语言</a></li>
+            <li><a href="/game">游戏编程</a></li>
+            <li><a href="/book">读书笔记</a></li>
+            </ul>
+            <ul class="nav-end">
+                <li><a href="/about">关于</a></li>
+                <li><a href="#">捐赠</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+<div class="container">
+<div class="inner">
+
+<h1><a name="1-4-go开发工具" class="anchor" href="#1-4-go%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4 Go开发工具</h1>
+
+<p>本节我将介绍几个开发工具，它们都具有自动化提示，自动化fmt功能。因为它们都是跨平台的，所以安装步骤之类的都是通用的。</p>
+<h2><a name="liteide" class="anchor" href="#liteide" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+LiteIDE</h2>
+
+<p>LiteIDE是一款专门为Go语言开发的跨平台轻量级集成开发环境（IDE），由visualfc编写。</p>
+
+<p><img src="/image/book_test/1.4.liteide.png?raw=true" alt=""></p>
+
+<p>图1.4 LiteIDE主界面</p>
+
+<p><strong>LiteIDE主要特点：</strong></p>
+
+<ul>
+<li>支持主流操作系统
+
+<ul>
+<li>Windows</li>
+<li>Linux</li>
+<li>MacOS X</li>
+</ul></li>
+<li>Go编译环境管理和切换
+
+<ul>
+<li>管理和切换多个Go编译环境</li>
+<li>支持Go语言交叉编译</li>
+</ul></li>
+<li>与Go标准一致的项目管理方式
+
+<ul>
+<li>基于GOPATH的包浏览器</li>
+<li>基于GOPATH的编译系统</li>
+<li>基于GOPATH的Api文档检索</li>
+</ul></li>
+<li>Go语言的编辑支持
+
+<ul>
+<li>类浏览器和大纲显示</li>
+<li>Gocode(代码自动完成工具)的完美支持</li>
+<li>Go语言文档查看和Api快速检索</li>
+<li>代码表达式信息显示<code>F1</code></li>
+<li>源代码定义跳转支持<code>F2</code></li>
+<li>Gdb断点和调试支持</li>
+<li>gofmt自动格式化支持</li>
+</ul></li>
+<li>其他特征
+
+<ul>
+<li>支持多国语言界面显示</li>
+<li>完全插件体系结构</li>
+<li>支持编辑器配色方案</li>
+<li>基于Kate的语法显示支持</li>
+<li>基于全文的单词自动完成</li>
+<li>支持键盘快捷键绑定方案</li>
+<li>Markdown文档编辑支持
+
+<ul>
+<li>实时预览和同步显示</li>
+<li>自定义CSS显示</li>
+<li>可导出HTML和PDF文档</li>
+<li>批量转换/合并为HTML/PDF文档</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p><strong>LiteIDE安装配置</strong></p>
+
+<ul>
+<li><p>LiteIDE安装</p>
+
+<ul>
+<li>下载地址 <a href="http://sourceforge.net/projects/liteide/files" rel="nofollow">http://sourceforge.net/projects/liteide/files</a></li>
+<li>源码地址 <a href="https://github.com/visualfc/liteide" rel="nofollow">https://github.com/visualfc/liteide</a>
+<br></li>
+</ul>
+
+<p>首先安装好Go语言环境，然后根据操作系统下载LiteIDE对应的压缩文件直接解压即可使用。</p></li>
+
+<li><p>编译环境设置</p>
+
+<p>根据自身系统要求切换和配置LiteIDE当前使用的环境变量。</p>
+
+<p>以Windows操作系统，64位Go语言为例，
+工具栏的环境配置中选择win64，点<code>编辑环境</code>，进入LiteIDE编辑win64.env文件</p>
+
+<pre><code>GOROOT=c:\go
+GOBIN=
+GOARCH=amd64
+GOOS=windows
+CGO_ENABLED=1
+
+PATH=%GOBIN%;%GOROOT%\bin;%PATH%
+。。。
+</code></pre>
+
+<p>将其中的<code>GOROOT=c:\go</code>修改为当前Go安装路径，存盘即可，如果有MinGW64，可以将<code>c:\MinGW64\bin</code>加入PATH中以便go调用gcc支持CGO编译。</p>
+
+<p>以Linux操作系统，64位Go语言为例，
+工具栏的环境配置中选择linux64，点<code>编辑环境</code>，进入LiteIDE编辑linux64.env文件</p>
+
+<pre><code>GOROOT=$HOME/go
+GOBIN=
+GOARCH=amd64
+GOOS=linux
+CGO_ENABLED=1
+
+PATH=$GOBIN:$GOROOT/bin:$PATH   
+。。。
+</code></pre>
+
+<p>将其中的<code>GOROOT=$HOME/go</code>修改为当前Go安装路径，存盘即可。</p></li>
+
+<li><p>GOPATH设置</p>
+
+<p>Go语言的工具链使用GOPATH设置，是Go语言开发的项目路径列表，在命令行中输入(在LiteIDE中也可以<code>Ctrl+,</code>直接输入)<code>go help gopath</code>快速查看GOPATH文档。</p>
+
+<p>在LiteIDE中可以方便的查看和设置GOPATH。通过<code>菜单－查看－GOPATH</code>设置，可以查看系统中已存在的GOPATH列表，
+同时可根据需要添加项目目录到自定义GOPATH列表中。</p></li>
+</ul>
+<h2><a name="sublime-text" class="anchor" href="#sublime-text" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Sublime Text</h2>
+
+<p>这里将介绍Sublime Text 3（以下简称Sublime）+ GoSublime + gocode的组合，那么为什么选择这个组合呢？</p>
+
+<ul>
+<li><p>自动化提示代码,如下图所示</p>
+
+<p><img src="/image/book_test/1.4.sublime1.png?raw=true" alt=""></p>
+
+<p>图1.5 sublime自动化提示界面</p></li>
+
+<li><p>保存的时候自动格式化代码，让您编写的代码更加美观，符合Go的标准。</p></li>
+
+<li><p>支持项目管理</p>
+
+<p><img src="/image/book_test/1.4.sublime2.png?raw=true" alt=""></p>
+
+<p>图1.6 sublime项目管理界面</p></li>
+
+<li><p>支持语法高亮</p></li>
+
+<li><p>Sublime Text 3可免费使用，只是保存次数达到一定数量之后就会提示是否购买，点击取消继续用，和正式注册版本没有任何区别。</p></li>
+</ul>
+
+<p>接下来就开始讲如何安装，下载 <a href="http://www.sublimetext.com/" rel="nofollow">Sublime</a></p>
+
+<p>根据自己相应的系统下载相应的版本，然后打开Sublime，对于不熟悉Sublime的同学可以先看一下这篇文章<a href="http://blog.jobbole.com/88648/" rel="nofollow">Sublime Text 全程指南</a>或者<a href="http://blog.csdn.net/sam976/article/details/52076271" rel="nofollow">sublime text3入门教程</a></p>
+
+<ol>
+<li>打开之后安装 Package Control：Ctrl+` 打开命令行，执行如下代码：</li>
+</ol>
+
+<p>适用于 Sublime Text 3：</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">import</span>  <span class="n">urllib</span><span class="n">.</span><span class="n">request</span><span class="n">,</span><span class="n">os</span><span class="n">;</span><span class="n">pf</span><span class="k">=</span><span class="m">&#39;Package Control.sublime-package&#39;</span><span class="n">;</span><span class="n">ipp</span><span class="k">=</span><span class="n">sublime</span><span class="n">.</span><span class="n">installed_packages_path</span><span class="n">(</span><span class="n">)</span><span class="n">;</span><span class="n">urllib</span><span class="n">.</span><span class="n">request</span><span class="n">.</span><span class="n">install_opener</span><span class="n">(</span><span class="n">urllib</span><span class="n">.</span><span class="n">request</span><span class="n">.</span><span class="n">build_opener</span><span class="n">(</span><span class="n">urllib</span><span class="n">.</span><span class="n">request</span><span class="n">.</span><span class="n">ProxyHandler</span><span class="n">(</span><span class="n">)</span><span class="n">)</span><span class="n">)</span><span class="n">;</span><span class="n">open</span><span class="n">(</span><span class="n">os</span><span class="n">.</span><span class="n">path</span><span class="n">.</span><span class="n">join</span><span class="n">(</span><span class="n">ipp</span><span class="n">,</span><span class="n">pf</span><span class="n">)</span><span class="n">,</span><span class="m">&#39;wb&#39;</span><span class="n">)</span><span class="n">.</span><span class="n">write</span><span class="n">(</span><span class="n">urllib</span><span class="n">.</span><span class="n">request</span><span class="n">.</span><span class="n">urlopen</span><span class="n">(</span><span class="m">&#39;http://sublime.wbond.net/&#39;</span><span class="k">+</span><span class="n">pf</span><span class="n">.</span><span class="n">replace</span><span class="n">(</span><span class="m">&#39; &#39;</span><span class="n">,</span><span class="m">&#39;%20&#39;</span><span class="n">)</span><span class="n">)</span><span class="n">.</span><span class="n">read</span><span class="n">(</span><span class="n">)</span><span class="n">)</span>
+</pre></div>
+
+<p>适用于 Sublime Text 2：</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">import</span>  <span class="n">urllib2</span><span class="n">,</span><span class="n">os</span><span class="n">;</span><span class="n">pf</span><span class="k">=</span><span class="m">&#39;Package Control.sublime-package&#39;</span><span class="n">;</span><span class="n">ipp</span><span class="k">=</span><span class="n">sublime</span><span class="n">.</span><span class="n">installed_packages_path</span><span class="n">(</span><span class="n">)</span><span class="n">;</span><span class="n">os</span><span class="n">.</span><span class="n">makedirs</span><span class="n">(</span><span class="n">ipp</span><span class="n">)</span><span class="n">ifnotos</span><span class="n">.</span><span class="n">path</span><span class="n">.</span><span class="n">exists</span><span class="n">(</span><span class="n">ipp</span><span class="n">)</span><span class="n">elseNone</span><span class="n">;</span><span class="n">urllib2</span><span class="n">.</span><span class="n">install_opener</span><span class="n">(</span><span class="n">urllib2</span><span class="n">.</span><span class="n">build_opener</span><span class="n">(</span><span class="n">urllib2</span><span class="n">.</span><span class="n">ProxyHandler</span><span class="n">(</span><span class="n">)</span><span class="n">)</span><span class="n">)</span><span class="n">;</span><span class="n">open</span><span class="n">(</span><span class="n">os</span><span class="n">.</span><span class="n">path</span><span class="n">.</span><span class="n">join</span><span class="n">(</span><span class="n">ipp</span><span class="n">,</span><span class="n">pf</span><span class="n">)</span><span class="n">,</span><span class="m">&#39;wb&#39;</span><span class="n">)</span><span class="n">.</span><span class="n">write</span><span class="n">(</span><span class="n">urllib2</span><span class="n">.</span><span class="n">urlopen</span><span class="n">(</span><span class="m">&#39;http://sublime.wbond.net/&#39;</span><span class="k">+</span><span class="n">pf</span><span class="n">.</span><span class="n">replace</span><span class="n">(</span><span class="m">&#39; &#39;</span><span class="n">,</span><span class="m">&#39;%20&#39;</span><span class="n">)</span><span class="n">)</span><span class="n">.</span><span class="n">read</span><span class="n">(</span><span class="n">)</span><span class="n">)</span><span class="n">;</span><span class="n">print</span><span class="n">(</span><span class="m">&#39;Please restart Sublime Text to finish installation&#39;</span><span class="n">)</span>
+</pre></div>
+
+<p>这个时候重启一下Sublime，可以发现在在菜单栏多了一个如下的栏目，说明Package Control已经安装成功了。</p>
+
+<p><img src="/image/book_test/1.4.sublime3.png?raw=true" alt=""></p>
+
+<pre><code>图1.7 sublime包管理
+</code></pre>
+
+<ol>
+<li>安装完之后就可以安装Sublime的插件了。需安装GoSublime、SidebarEnhancements和Go Build，安装插件之后记得重启Sublime生效，Ctrl+Shift+p打开Package Controll 输入<code>pcip</code>（即“Package Control: Install Package”的缩写）。</li>
+</ol>
+
+<p>这个时候看左下角显示正在读取包数据，完成之后出现如下界面</p>
+
+<p><img src="/image/book_test/1.4.sublime4.png?raw=true" alt=""></p>
+
+<pre><code>图1.8 sublime安装插件界面
+</code></pre>
+
+<p>这个时候输入GoSublime，按确定就开始安装了。同理应用于SidebarEnhancements和Go Build。</p>
+
+<ol>
+<li><p>安装 <a href="https://github.com/nsf/gocode/" rel="nofollow">gocode</a></p>
+
+<pre><code>go get -u github.com/nsf/gocode
+</code></pre>
+
+<p>gocode 将会安装在默认<code>$GOBIN</code></p></li>
+</ol>
+
+<p>另外建议安装gotests(生成测试代码):</p>
+
+<pre><code>先在sublime安装gotests插件,再运行:
+</code></pre>
+
+<div class="highlight highlight-Go"><pre><span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">cweill</span><span class="k">/</span><span class="n">gotests</span><span class="k">/</span><span class="k">...</span>
+</pre></div>
+
+<ol>
+<li>验证是否安装成功，你可以打开Sublime，打开main.go，看看语法是不是高亮了，输入<code>import</code>是不是自动化提示了，<code>import &#34;fmt&#34;</code>之后，输入<code>fmt.</code>是不是自动化提示有函数了。</li>
+</ol>
+
+<p>如果已经出现这个提示，那说明你已经安装完成了，并且完成了自动提示。</p>
+
+<p>如果没有出现这样的提示，一般就是你的<code>$PATH</code>没有配置正确。你可以打开终端，输入gocode，是不是能够正确运行，如果不行就说明<code>$PATH</code>没有配置正确。
+  (针对XP)有时候在终端能运行成功,但sublime无提示或者编译解码错误,请安装sublime text3和convert utf8插件试一试</p>
+
+<ol>
+<li>MacOS下已经设置了$GOROOT, $GOPATH, $GOBIN，还是没有自动提示怎么办。
+<br></li>
+</ol>
+
+<p>请在sublime中使用command + 9， 然后输入env检查$PATH, GOROOT, $GOPATH, $GOBIN等变量， 如果没有请采用下面的方法。</p>
+
+<p>首先建立下面的连接， 然后从Terminal中直接启动sublime</p>
+
+<p>ln -s /Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime</p>
+<h2><a name="visual-studio-code" class="anchor" href="#visual-studio-code" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Visual Studio Code</h2>
+
+<p>vscode是微软基于Electron和web技术构建的开源编辑器, 是一款很强大的编辑器。开源地址:<a href="https://github.com/Microsoft/vscode" rel="nofollow">https://github.com/Microsoft/vscode</a></p>
+
+<p>1、安装Visual Studio Code 最新版</p>
+
+<p>官方网站：<a href="https://code.visualstudio.com/" rel="nofollow">https://code.visualstudio.com/</a>
+下载Visual Studio Code 最新版，安装过程略。</p>
+
+<p>2、安装Go插件</p>
+
+<p>点击右边的 Extensions 图标
+搜索Go插件
+在插件列表中，选择 Go，进行安装，安装之后，系统会提示重启 Visual Studio Code。</p>
+
+<p>建议把自动保存功能开启。开启方法为：选择菜单 File，点击 Auto save。</p>
+
+<p>vscode代码设置可用于Go扩展。这些都可以在用户的喜好来设置或工作区设置（.vscode/settings.json）。</p>
+
+<p>打开首选项-用户设置 settings.json:</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="n">{</span>
+    <span class="s">&#34;go.buildOnSave&#34;</span><span class="n">:</span> <span class="o">true</span><span class="n">,</span>
+    <span class="s">&#34;go.lintOnSave&#34;</span><span class="n">:</span> <span class="o">true</span><span class="n">,</span>
+    <span class="s">&#34;go.vetOnSave&#34;</span><span class="n">:</span> <span class="o">true</span><span class="n">,</span>
+    <span class="s">&#34;go.buildFlags&#34;</span><span class="n">:</span> <span class="n">[</span><span class="n">]</span><span class="n">,</span>
+    <span class="s">&#34;go.lintFlags&#34;</span><span class="n">:</span> <span class="n">[</span><span class="n">]</span><span class="n">,</span>
+    <span class="s">&#34;go.vetFlags&#34;</span><span class="n">:</span> <span class="n">[</span><span class="n">]</span><span class="n">,</span>
+    <span class="s">&#34;go.coverOnSave&#34;</span><span class="n">:</span> <span class="o">false</span><span class="n">,</span>
+    <span class="s">&#34;go.useCodeSnippetsOnFunctionSuggest&#34;</span><span class="n">:</span> <span class="o">false</span><span class="n">,</span>
+    <span class="s">&#34;go.formatOnSave&#34;</span><span class="n">:</span> <span class="o">true</span><span class="n">,</span>
+    <span class="c">//goimports</span>
+    <span class="s">&#34;go.formatTool&#34;</span><span class="n">:</span> <span class="s">&#34;goreturns&#34;</span><span class="n">,</span>
+    <span class="s">&#34;go.goroot&#34;</span><span class="n">:</span> <span class="s">&#34;&#34;</span><span class="n">,</span><span class="c">//你的Goroot</span>
+    <span class="s">&#34;go.gopath&#34;</span><span class="n">:</span> <span class="s">&#34;&#34;</span><span class="n">,</span><span class="c">//你的Gopath</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>接着安装依赖包支持(网络不稳定,请直接到 Github <a href="https://github.com/golang" rel="nofollow">Golang</a> 下载再移动到相关目录):</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">nsf</span><span class="k">/</span><span class="n">gocode</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">rogpeppe</span><span class="k">/</span><span class="n">godef</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">zmb3</span><span class="k">/</span><span class="n">gogetdoc</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">golang</span><span class="k">/</span><span class="n">lint</span><span class="k">/</span><span class="n">golint</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">lukehoban</span><span class="k">/</span><span class="k">go</span><span class="k">-</span><span class="n">outline</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">sourcegraph</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">sqs</span><span class="k">/</span><span class="n">goreturns</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">golang</span><span class="n">.</span><span class="n">org</span><span class="k">/</span><span class="n">x</span><span class="k">/</span><span class="n">tools</span><span class="k">/</span><span class="n">cmd</span><span class="k">/</span><span class="n">gorename</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">tpng</span><span class="k">/</span><span class="n">gopkgs</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">newhook</span><span class="k">/</span><span class="k">go</span><span class="k">-</span><span class="n">symbols</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">golang</span><span class="n">.</span><span class="n">org</span><span class="k">/</span><span class="n">x</span><span class="k">/</span><span class="n">tools</span><span class="k">/</span><span class="n">cmd</span><span class="k">/</span><span class="n">guru</span>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">u</span> <span class="k">-</span><span class="n">v</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">cweill</span><span class="k">/</span><span class="n">gotests</span><span class="k">/</span><span class="k">...</span>
+</pre></div>
+
+<p>vscode 还有一项很强大的功能就是断点调试,结合 <a href="https://github.com/derekparker/delve" rel="nofollow">delve</a> 可以很好的进行 Go 代码调试</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">v</span> <span class="k">-</span><span class="n">u</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">peterh</span><span class="k">/</span><span class="n">liner</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">derekparker</span><span class="k">/</span><span class="n">delve</span><span class="k">/</span><span class="n">cmd</span><span class="k">/</span><span class="n">dlv</span>
+
+<span class="n">brew</span> <span class="n">install</span> <span class="k">go</span><span class="k">-</span><span class="n">delve</span><span class="k">/</span><span class="n">delve</span><span class="k">/</span><span class="n">delve</span><span class="n">(</span><span class="n">mac可选</span><span class="n">)</span>
+
+</pre></div>
+
+<p>如果有问题再来一遍:</p>
+
+<div class="highlight highlight-Go"><pre><span class="k">go</span> <span class="n">get</span> <span class="k">-</span><span class="n">v</span> <span class="k">-</span><span class="n">u</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">peterh</span><span class="k">/</span><span class="n">liner</span> <span class="n">github</span><span class="n">.</span><span class="n">com</span><span class="k">/</span><span class="n">derekparker</span><span class="k">/</span><span class="n">delve</span><span class="k">/</span><span class="n">cmd</span><span class="k">/</span><span class="n">dlv</span>
+</pre></div>
+
+<p>注意:修改&#34;dlv-cert&#34;证书, 选择&#34;显示简介&#34;-&gt;&#34;信任&#34;-&gt;&#34;代码签名&#34; 修改为: 始终信任</p>
+
+<p>打开首选项-工作区设置,配置launch.json:</p>
+
+<div class="highlight highlight-Go"><pre><span class="n">{</span>
+    <span class="s">&#34;version&#34;</span><span class="n">:</span> <span class="s">&#34;0.2.0&#34;</span><span class="n">,</span>
+    <span class="s">&#34;configurations&#34;</span><span class="n">:</span> <span class="n">[</span>
+        <span class="n">{</span>
+            <span class="s">&#34;name&#34;</span><span class="n">:</span> <span class="s">&#34;main.go&#34;</span><span class="n">,</span>
+            <span class="s">&#34;type&#34;</span><span class="n">:</span> <span class="s">&#34;go&#34;</span><span class="n">,</span>
+            <span class="s">&#34;request&#34;</span><span class="n">:</span> <span class="s">&#34;launch&#34;</span><span class="n">,</span>
+            <span class="s">&#34;mode&#34;</span><span class="n">:</span> <span class="s">&#34;debug&#34;</span><span class="n">,</span>
+            <span class="s">&#34;remotePath&#34;</span><span class="n">:</span> <span class="s">&#34;&#34;</span><span class="n">,</span>
+            <span class="s">&#34;port&#34;</span><span class="n">:</span> <span class="m">2345</span><span class="n">,</span>
+            <span class="s">&#34;host&#34;</span><span class="n">:</span> <span class="s">&#34;127.0.0.1&#34;</span><span class="n">,</span>
+            <span class="s">&#34;program&#34;</span><span class="n">:</span> <span class="s">&#34;${workspaceRoot}&#34;</span><span class="n">,</span><span class="c">//工作空间路径</span>
+            <span class="s">&#34;env&#34;</span><span class="n">:</span> <span class="n">{</span><span class="n">}</span><span class="n">,</span>
+            <span class="s">&#34;args&#34;</span><span class="n">:</span> <span class="n">[</span><span class="n">]</span><span class="n">,</span>
+            <span class="s">&#34;showLog&#34;</span><span class="n">:</span> <span class="o">true</span>
+        <span class="n">}</span>
+    <span class="n">]</span>
+<span class="n">}</span>
+</pre></div>
+<h2><a name="atom" class="anchor" href="#atom" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Atom</h2>
+
+<p>Atom是Github基于Electron和web技术构建的开源编辑器, 是一款很漂亮强大的编辑器缺点是速度比较慢。</p>
+
+<p>首先要先安装下Atom，下载地址: <a href="https://atom.io/" rel="nofollow">https://atom.io/</a></p>
+
+<p>然后安装go-plus插件:</p>
+
+<pre><code>go-plus是Atom上面的一款开源的go语言开发环境的的插件
+
+它需要依赖下面的go语言工具:
+</code></pre>
+
+<div class="highlight highlight-Go"><pre><span class="m">1.</span><span class="n">autocomplete</span><span class="k">-</span><span class="k">go</span> <span class="n">：</span><span class="n">gocode的代码自动提示</span>
+<span class="m">2.</span><span class="n">gofmt</span> <span class="n">：</span><span class="n">使用goftm</span><span class="n">,</span><span class="n">goimports</span><span class="n">,</span><span class="n">goturns</span>
+<span class="m">3.</span><span class="n">builder</span><span class="k">-</span><span class="k">go</span><span class="n">:</span><span class="k">go</span><span class="k">-</span><span class="n">install</span> <span class="n">和go</span><span class="k">-</span><span class="n">test</span><span class="n">,</span><span class="n">验证代码</span><span class="n">，</span><span class="n">给出建议</span>
+<span class="m">4.</span><span class="n">gometalinet</span><span class="k">-</span><span class="n">linter</span><span class="n">:</span><span class="n">goline</span><span class="n">,</span><span class="n">vet</span><span class="n">,</span><span class="n">gotype的检查</span>
+<span class="m">5.</span><span class="n">navigator</span><span class="k">-</span><span class="n">godef</span><span class="n">:</span><span class="n">godef</span>
+<span class="m">6.</span><span class="n">tester</span><span class="k">-</span><span class="n">goo</span> <span class="n">:</span><span class="k">go</span> <span class="n">test</span>
+<span class="m">7.</span><span class="n">gorename</span> <span class="n">:</span><span class="n">rename</span>
+
+</pre></div>
+
+<p>在Atom中的 Preference 中可以找到install菜单,输入 go-plus,然后点击安装(install)</p>
+
+<p>就会开始安装 go-plus ， go-plus 插件会自动安装对应的依赖插件，如果没有安装对应的go的类库会自动运行: go get 安装。</p>
+<h2><a name="goland" class="anchor" href="#goland" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+GoLand</h2>
+
+<p>GoLand 是 JetBrains 公司推出的 Go 语言集成开发环境，是 Idea Go 插件是强化版。GoLand 同样基于 IntelliJ 平台开发，支持 JetBrains 的插件体系。</p>
+
+<p>下载地址: <a href="https://www.jetbrains.com/go/" rel="nofollow">https://www.jetbrains.com/go/</a></p>
+<h2><a name="vim" class="anchor" href="#vim" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Vim</h2>
+
+<p>Vim是从vi发展出来的一个文本编辑器, 代码补全、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用。</p>
+
+<p>vim-go是vim上面的一款开源的go语言使用最为广泛开发环境的的插件</p>
+
+<p>插件地址：<a href="https://github.com/fatih/vim-go" rel="nofollow">github.com/fatih/vim-go</a></p>
+
+<p>vim的插件管理主要有<a href="https://github.com/tpope/vim-pathogen" rel="nofollow">Pathogen</a>与<a href="https://github.com/VundleVim/Vundle.vim" rel="nofollow">Vundle</a>
+，但是其作用的方面不同。
+pathogen是为了解决每一个插件安装后文件分散到多个目录不好管理而存在的。vundle是为了解决自动搜索及下载插件而存在的。
+这两个插件可同时使用。</p>
+
+<p>1.安装Vundle</p>
+
+<div class="highlight highlight-sh"><pre>mkdir ~/.vim/bundle
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+</pre></div>
+
+<p>修改.vimrc，将Vundle的相关配置置在最开始处(<a href="https://github.com/VundleVim/Vundle.vim" rel="nofollow">详细参考Vundle的介绍文档</a>)</p>
+
+<div class="highlight highlight-sh"><pre>set nocompatible              &#34; be iMproved, required
+filetype off                  &#34; required
+
+&#34; set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+&#34; let Vundle manage Vundle, required
+Plugin &#39;gmarik/Vundle.vim&#39;
+
+&#34; All of your Plugins must be added before the following line
+call vundle#end()            &#34; required
+filetype plugin indent on    &#34; required
+
+</pre></div>
+
+<p>2.安装Vim-go</p>
+
+<p>修改~/.vimrc，在vundle#begin和vundle#end间增加一行：</p>
+
+<div class="highlight highlight-sh"><pre>
+Plugin &#39;fatih/vim-go&#39;
+</pre></div>
+
+<p>在Vim内执行: PluginInstall</p>
+
+<p>3.安装YCM(Your Complete Me)进行自动补全
+在~/.vimrc中添加一行：</p>
+
+<div class="highlight highlight-sh"><pre>
+Plugin &#39;Valloric/YouCompleteMe&#39;
+</pre></div>
+
+<p>在Vim内执行: PluginInstall</p>
+
+<p><img src="/image/book_test/1.4.vim.png?raw=true" alt=""></p>
+
+<p>图1.9 VIM编辑器自动化提示Go界面</p>
+
+<p>接着我们继续配置vim:</p>
+
+<ol>
+<li><p>配置vim高亮显示</p>
+
+<pre><code>cp -r $GOROOT/misc/vim/* ~/.vim/
+</code></pre></li>
+
+<li><p>在~/.vimrc文件中增加语法高亮显示</p>
+
+<pre><code>filetype plugin indent on
+syntax on
+</code></pre></li>
+
+<li><p>安装<a href="https://github.com/nsf/gocode/" rel="nofollow">Gocode</a></p>
+
+<pre><code>go get -u github.com/nsf/gocode
+</code></pre>
+
+<p>gocode默认安装到<code>$GOPATH/bin</code>下面。</p></li>
+
+<li><p>配置<a href="https://github.com/nsf/gocode/" rel="nofollow">Gocode</a></p>
+
+<pre><code>~ cd $GOPATH/src/github.com/nsf/gocode/vim
+~ ./update.bash
+~ gocode set propose-builtins true
+propose-builtins true
+~ gocode set lib-path &#34;/home/border/gocode/pkg/linux_amd64&#34;
+lib-path &#34;/home/border/gocode/pkg/linux_amd64&#34;
+~ gocode set
+propose-builtins true
+lib-path &#34;/home/border/gocode/pkg/linux_amd64&#34;
+</code></pre>
+
+<blockquote>
+<p>gocode set里面的两个参数的含意说明：</p>
+
+<p>propose-builtins：是否自动提示Go的内置函数、类型和常量，默认为false，不提示。</p>
+
+<p>lib-path:默认情况下，gocode只会搜索<strong>$GOPATH/pkg/$GOOS_$GOARCH</strong> 和 <strong>$GOROOT/pkg/$GOOS_$GOARCH</strong>目录下的包，当然这个设置就是可以设置我们额外的lib能访问的路径</p>
+</blockquote></li>
+
+<li><p>恭喜你，安装完成，你现在可以使用<code>:e main.go</code>体验一下开发Go的乐趣。</p></li>
+</ol>
+
+<p>更多VIM 设定, 可参考<a href="http://www.cnblogs.com/witcxc/archive/2011/12/28/2304704.html" rel="nofollow">链接</a></p>
+<h2><a name="emacs" class="anchor" href="#emacs" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Emacs</h2>
+
+<p>Emacs传说中的神器，她不仅仅是一个编辑器，它是一个整合环境，或可称它为集成开发环境，这些功能如让使用者置身于全功能的操作系统中。</p>
+
+<p><img src="/image/book_test/1.4.emacs.png?raw=true" alt=""></p>
+
+<p>图1.10 Emacs编辑Go主界面</p>
+
+<ol>
+<li><p>配置Emacs高亮显示</p>
+
+<pre><code>cp $GOROOT/misc/emacs/* ~/.emacs.d/
+</code></pre></li>
+
+<li><p>安装<a href="https://github.com/nsf/gocode/" rel="nofollow">Gocode</a></p>
+
+<pre><code>go get -u github.com/nsf/gocode
+</code></pre>
+
+<p>gocode默认安装到<code>$GOBIN</code>里面下面。</p></li>
+
+<li><p>配置<a href="https://github.com/nsf/gocode/" rel="nofollow">Gocode</a></p>
+
+<pre><code>~ cd $GOPATH/src/github.com/nsf/gocode/emacs
+~ cp go-autocomplete.el ~/.emacs.d/
+~ gocode set propose-builtins true
+propose-builtins true
+~ gocode set lib-path &#34;/home/border/gocode/pkg/linux_amd64&#34; // 换为你自己的路径
+lib-path &#34;/home/border/gocode/pkg/linux_amd64&#34;
+~ gocode set
+propose-builtins true
+lib-path &#34;/home/border/gocode/pkg/linux_amd64&#34;
+</code></pre></li>
+
+<li><p>需要安装 <a href="http://www.emacswiki.org/emacs/AutoComplete" rel="nofollow">Auto Completion</a></p></li>
+</ol>
+
+<p>下载AutoComplete并解压</p>
+
+<pre><code>~ make install DIR=$HOME/.emacs.d/auto-complete
+</code></pre>
+
+<p>配置~/.emacs文件</p>
+
+<pre><code>    ;;auto-complete
+    (require &#39;auto-complete-config)
+    (add-to-list &#39;ac-dictionary-directories &#34;~/.emacs.d/auto-complete/ac-dict&#34;)
+    (ac-config-default)
+    (local-set-key (kbd &#34;M-/&#34;) &#39;semantic-complete-analyze-inline)
+    (local-set-key &#34;.&#34; &#39;semantic-complete-self-insert)
+    (local-set-key &#34;&gt;&#34; &#39;semantic-complete-self-insert)
+</code></pre>
+
+<p>详细信息参考: <a href="http://www.emacswiki.org/emacs/AutoComplete" rel="nofollow">http://www.emacswiki.org/emacs/AutoComplete</a></p>
+
+<ol>
+<li><p>配置.emacs</p>
+
+<pre><code>;; golang mode
+(require &#39;go-mode-load)
+(require &#39;go-autocomplete)
+;; speedbar
+;; (speedbar 1)
+(speedbar-add-supported-extension &#34;.go&#34;)
+(add-hook
+&#39;go-mode-hook
+&#39;(lambda ()
+    ;; gocode
+    (auto-complete-mode 1)
+    (setq ac-sources &#39;(ac-source-go))
+    ;; Imenu &amp; Speedbar
+    (setq imenu-generic-expression
+        &#39;((&#34;type&#34; &#34;^type *\\([^ \t\n\r\f]*\\)&#34; 1)
+        (&#34;func&#34; &#34;^func *\\(.*\\) {&#34; 1)))
+    (imenu-add-to-menubar &#34;Index&#34;)
+    ;; Outline mode
+    (make-local-variable &#39;outline-regexp)
+    (setq outline-regexp &#34;//\\.\\|//[^\r\n\f][^\r\n\f]\\|pack\\|func\\|impo\\|cons\\|var.\\|type\\|\t\t*....&#34;)
+    (outline-minor-mode 1)
+    (local-set-key &#34;\M-a&#34; &#39;outline-previous-visible-heading)
+    (local-set-key &#34;\M-e&#34; &#39;outline-next-visible-heading)
+    ;; Menu bar
+    (require &#39;easymenu)
+    (defconst go-hooked-menu
+        &#39;(&#34;Go tools&#34;
+        [&#34;Go run buffer&#34; go t]
+        [&#34;Go reformat buffer&#34; go-fmt-buffer t]
+        [&#34;Go check buffer&#34; go-fix-buffer t]))
+    (easy-menu-define
+        go-added-menu
+        (current-local-map)
+        &#34;Go tools&#34;
+        go-hooked-menu)
+
+    ;; Other
+    (setq show-trailing-whitespace t)
+    ))
+;; helper function
+(defun go ()
+    &#34;run current buffer&#34;
+    (interactive)
+    (compile (concat &#34;go run &#34; (buffer-file-name))))
+
+;; helper function
+(defun go-fmt-buffer ()
+    &#34;run gofmt on current buffer&#34;
+    (interactive)
+    (if buffer-read-only
+    (progn
+        (ding)
+        (message &#34;Buffer is read only&#34;))
+    (let ((p (line-number-at-pos))
+    (filename (buffer-file-name))
+    (old-max-mini-window-height max-mini-window-height))
+        (show-all)
+        (if (get-buffer &#34;*Go Reformat Errors*&#34;)
+    (progn
+        (delete-windows-on &#34;*Go Reformat Errors*&#34;)
+        (kill-buffer &#34;*Go Reformat Errors*&#34;)))
+        (setq max-mini-window-height 1)
+        (if (= 0 (shell-command-on-region (point-min) (point-max) &#34;gofmt&#34; &#34;*Go Reformat Output*&#34; nil &#34;*Go Reformat Errors*&#34; t))
+    (progn
+        (erase-buffer)
+        (insert-buffer-substring &#34;*Go Reformat Output*&#34;)
+        (goto-char (point-min))
+        (forward-line (1- p)))
+    (with-current-buffer &#34;*Go Reformat Errors*&#34;
+    (progn
+        (goto-char (point-min))
+        (while (re-search-forward &#34;&lt;standard input&gt;&#34; nil t)
+        (replace-match filename))
+        (goto-char (point-min))
+        (compilation-mode))))
+        (setq max-mini-window-height old-max-mini-window-height)
+        (delete-windows-on &#34;*Go Reformat Output*&#34;)
+        (kill-buffer &#34;*Go Reformat Output*&#34;))))
+;; helper function
+(defun go-fix-buffer ()
+    &#34;run gofix on current buffer&#34;
+    (interactive)
+    (show-all)
+    (shell-command-on-region (point-min) (point-max) &#34;go tool fix -diff&#34;))
+</code></pre></li>
+
+<li><p>恭喜你，你现在可以体验在神器中开发Go的乐趣。默认speedbar是关闭的，如果打开需要把 ;; (speedbar 1) 前面的注释去掉，或者也可以通过 <em>M-x speedbar</em> 手动开启。</p></li>
+</ol>
+<h2><a name="eclipse" class="anchor" href="#eclipse" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Eclipse</h2>
+
+<p>Eclipse也是非常常用的开发利器，以下介绍如何使用Eclipse来编写Go程序。</p>
+
+<p><img src="/image/book_test/1.4.eclipse1.png?raw=true" alt=""></p>
+
+<p>图1.11 Eclipse编辑Go的主界面</p>
+
+<ol>
+<li><p>首先下载并安装好<a href="http://www.eclipse.org/" rel="nofollow">Eclipse</a></p></li>
+
+<li><p>下载<a href="https://code.google.com/p/goclipse/" rel="nofollow">goclipse</a>插件</p>
+
+<p><a href="http://code.google.com/p/goclipse/wiki/InstallationInstructions" rel="nofollow">http://code.google.com/p/goclipse/wiki/InstallationInstructions</a></p></li>
+
+<li><p>下载gocode，用于go的代码补全提示</p>
+
+<p>gocode的github地址：</p>
+
+<pre><code>https://github.com/nsf/gocode
+</code></pre>
+
+<p>在windows下要安装git，通常用<a href="https://code.google.com/p/msysgit/" rel="nofollow">msysgit</a></p>
+
+<p>再在cmd下安装：</p>
+
+<pre><code>go get -u github.com/nsf/gocode
+</code></pre>
+
+<p>也可以下载代码，直接用go build来编译，会生成gocode.exe</p></li>
+
+<li><p>下载<a href="http://sourceforge.net/projects/mingw/files/MinGW/" rel="nofollow">MinGW</a>并按要求装好</p></li>
+
+<li><p>配置插件</p>
+
+<p>Windows-&gt;Reference-&gt;Go</p></li>
+</ol>
+
+<p>(1).配置Go的编译器</p>
+
+<p><img src="/image/book_test/1.4.eclipse2.png?raw=true" alt=""></p>
+
+<p>图1.12 设置Go的一些基础信息</p>
+
+<p>(2).配置Gocode（可选，代码补全），设置Gocode路径为之前生成的gocode.exe文件</p>
+
+<p><img src="/image/book_test/1.4.eclipse3.png?raw=true" alt=""></p>
+
+<p>图1.13 设置gocode信息</p>
+
+<p>(3).配置GDB（可选，做调试用），设置GDB路径为MingW安装目录下的gdb.exe文件</p>
+
+<p><img src="/image/book_test/1.4.eclipse4.png?raw=true" alt=""></p>
+
+<p>图1.14 设置GDB信息</p>
+
+<ol>
+<li><p>测试是否成功</p>
+
+<p>新建一个go工程，再建立一个hello.go。如下图：</p>
+
+<p><img src="/image/book_test/1.4.eclipse5.png?raw=true" alt=""></p>
+
+<p>图1.15 新建项目编辑文件</p>
+
+<p>调试如下（要在console中用输入命令来调试）：</p>
+
+<p><img src="/image/book_test/1.4.eclipse6.png?raw=true" alt=""></p>
+
+<p>图1.16 调试Go程序</p></li>
+</ol>
+<h2><a name="intellij-idea" class="anchor" href="#intellij-idea" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+IntelliJ IDEA</h2>
+
+<p>熟悉Java的读者应该对于idea不陌生，idea是通过一个插件来支持go语言的高亮语法,代码提示和重构实现。</p>
+
+<ol>
+<li><p>先下载idea，idea支持多平台：win,mac,linux，如果有钱就买个正式版，如果不行就使用社区免费版，对于只是开发Go语言来说免费版足够用了</p>
+
+<p><img src="/image/book_test/1.4.idea1.png?raw=true" alt=""></p></li>
+
+<li><p>安装Go插件，点击菜单File中的Setting，找到Plugins,点击,Broswer repo按钮。国内的用户可能会报错，自己解决哈。</p>
+
+<p><img src="/image/book_test/1.4.idea3.png?raw=true" alt=""></p></li>
+
+<li><p>这时候会看见很多插件，搜索找到Golang,双击,download and install。等到golang那一行后面出现Downloaded标志后,点OK。</p>
+
+<p><img src="/image/book_test/1.4.idea4.png?raw=true" alt=""></p>
+
+<p>然后点 Apply .这时候IDE会要求你重启。</p></li>
+
+<li><p>重启完毕后,创建新项目会发现已经可以创建golang项目了：</p>
+
+<p><img src="/image/book_test/1.4.idea5.png?raw=true" alt=""></p>
+
+<p>下一步,会要求你输入 go sdk的位置,一般都安装在C:\Go，linux和mac根据自己的安装目录设置，选中目录确定,就可以了。</p></li>
+</ol>
+<h2><a name="links" class="anchor" href="#links" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+links</h2>
+
+<ul>
+<li><a href="preface.md" rel="nofollow">目录</a></li>
+<li>上一节: <a href="/lang/book_test/1" rel="nofollow">Go 命令</a></li>
+<li>下一节: <a href="/lang/book_test/3" rel="nofollow">总结</a></li>
+</ul>
+
+</div>
+</div>
+</main>
+<footer>
+    &copy; Copyright 2018 by 码农大陆 World of CodeMonkey.
+</footer>
+</body>
+</html>

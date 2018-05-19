@@ -1,0 +1,26 @@
+domains:
+  - path: lang
+    title: 编程语言
+    url: lang
+
+  - path: game
+    title: 游戏编程
+    url: game
+
+  - path: book
+    title: 读书笔记
+    url: book
+
+pages:
+  - path: pages/about.md
+    url: about
+    title: 关于
+    local_image: img/
+
+  - path: pages/main.md
+    url: /
+    title: 主页
+    local_image: img/
+
+
+version: 1.0

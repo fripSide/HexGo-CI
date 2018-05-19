@@ -1,0 +1,13 @@
+books:
+  - path: moba
+    url:  moba
+    local_image: images/ # 是否使用本地图片链接，本地图片的地址
+    title: Unity Moba游戏开发教程
+    desc: Unity Moba游戏开发教程
+    cover: images/cover.png
+
+  - path: engine
+    url:  engine
+    title: Engine游戏开发教程
+    desc: 2d游戏引擎开发。
+    cover: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png

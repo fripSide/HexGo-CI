@@ -1,3 +1,4 @@
+{{define "layout" -}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,8 @@
     <meta name="viewport" content="width=320,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <link rel="shortcut icon" href="/static/images/icon.png">
     <link href="/static/css/main.css" rel="stylesheet" type="text/css">
-    
-    <title>主页</title>
+    {{/*<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">*/}}
+    <title>{{ .Title }}</title>
 </head>
 <body>
 <script>
@@ -30,15 +31,15 @@
                    </svg>
               </span>
         </label>
-        <a class="title" href="/">码农大陆 World of CodeMonkey</a>
+        <a class="title" href="{{ .Links.Pages.主页.Link }}">码农大陆 World of CodeMonkey</a>
         <div class="nav-item">
             <ul class="nav-start">
-            <li><a href="/lang">编程语言</a></li>
-            <li><a href="/game">游戏编程</a></li>
-            <li><a href="/book">读书笔记</a></li>
+            {{ range .Links.Domains -}}
+                <li><a href="{{ .Link }}">{{ .Title }}</a></li>
+            {{end -}}
             </ul>
             <ul class="nav-end">
-                <li><a href="/about">关于</a></li>
+                <li><a href="{{ .Links.Pages.关于.Link }}">{{ .Links.Pages.关于.Title }}</a></li>
                 <li><a href="#">捐赠</a></li>
             </ul>
         </div>
@@ -47,14 +48,7 @@
 <main>
 <div class="container">
 <div class="inner">
-
-<h2>主页</h2>
-<h3><a name="这是主页" class="anchor" href="#%E8%BF%99%E6%98%AF%E4%B8%BB%E9%A1%B5" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>这是主页</h3>
-
-<p><a href="/about" rel="nofollow">关于</a></p>
-
-<p><img src="/image/p1.png" alt="图片测试"></p>
-
+{{ template "content" . -}}
 </div>
 </div>
 </main>
@@ -63,3 +57,4 @@
 </footer>
 </body>
 </html>
+{{ end -}}

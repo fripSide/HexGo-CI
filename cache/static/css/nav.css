@@ -1,0 +1,108 @@
+.navbar {
+  background-color: #34495E;
+  height: 50px;
+  display: flex;
+  width: 100%;
+}
+.navbar div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  height: 50px;
+  float: left;
+  margin-left: 20px;
+}
+.navbar div a {
+  color: #1ABC9C;
+  text-decoration: none;
+}
+.navbar div .title {
+  width: 290px;
+}
+.navbar div .about {
+  float: right;
+}
+.navbar .nav-list, .navbar .nav-end {
+  z-index: 0;
+  display: flex;
+}
+.navbar .nav-list li, .navbar .nav-end li {
+  list-style: none;
+  float: left;
+  margin-left: 30px;
+}
+.navbar .nav-list li:last-child, .navbar .nav-end li:last-child {
+  padding-right: 25px;
+}
+.navbar .nav-list a, .navbar .nav-end a {
+  color: white;
+  line-height: 50px;
+  text-decoration-line: none;
+}
+.navbar .nav-list a:hover, .navbar .nav-end a:hover {
+  color: #1ABC9C;
+}
+.navbar .nav-end {
+  float: left;
+}
+.navbar label {
+  display: none;
+}
+.navbar .nav-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .navbar div {
+    margin: 0px;
+  }
+  .navbar .nav-toggle {
+    display: none;
+  }
+  .navbar label {
+    display: block;
+    z-index: 4;
+  }
+  .navbar .nav-list {
+    display: none;
+    margin-left: 0px;
+  }
+  .navbar .nav-list li {
+    margin-left: 0px;
+  }
+  .navbar .menu-icon {
+    display: block;
+    float: left;
+    width: 36px;
+    height: 26px;
+    line-height: 0;
+    padding-top: 17px;
+    text-align: center;
+  }
+  .navbar .menu-icon > svg path {
+    fill: white;
+  }
+  .navbar label[for=nav-toggler] {
+    display: block;
+    float: left;
+    width: 36px;
+    height: 36px;
+    z-index: 2;
+    cursor: pointer;
+  }
+  .navbar input:checked ~ .nav-list {
+    position: absolute;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: block;
+    background-color: #34495E;
+    z-index: 0;
+    margin-top: 50px;
+  }
+  .navbar input:checked ~ .nav-list li {
+    clear: both;
+    background-color: #34495E;
+  }
+}

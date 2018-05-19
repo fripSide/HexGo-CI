@@ -7,7 +7,7 @@ before_install:
   - go version
 
 script:
-  - go build
+  - go run main.go -action gen
 
 after_success:
   - cd ./cache
