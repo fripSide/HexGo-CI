@@ -9,6 +9,8 @@ before_install:
   - go version
 
 script:
+  - rm -rf cache
+  - mkdir cache
   - go run main.go -action gen
 
 after_success:
