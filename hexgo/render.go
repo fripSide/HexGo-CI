@@ -198,11 +198,12 @@ func (c *PageCache) saveToFile() {
 	if e1 != nil {
 		panic(e1)
 	}
-	fmt.Printf("Success to create %s\n", d)
+	//fmt.Printf("Success to create %s\n", d)
 	// 文件只有读写权限
 	err := ioutil.WriteFile(c.Path, []byte(c.Content), 0666)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Save: ", c.Path)
+	//fmt.Println("Save: ", c.Path)
+	fmt.Println(c.Path, "Exist", path.Ext(c.Path))
 }
