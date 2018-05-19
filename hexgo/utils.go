@@ -212,3 +212,11 @@ func traverseFile(path string, fun func(filePath string, info os.FileInfo)) erro
 	}
 	return nil
 }
+
+func file_is_exists(f string) bool {
+	_, err := os.Stat(f)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return err == nil
+}

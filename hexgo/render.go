@@ -205,5 +205,5 @@ func (c *PageCache) saveToFile() {
 		panic(err)
 	}
 	//fmt.Println("Save: ", c.Path)
-	fmt.Println(c.Path, "Exist", path.Ext(c.Path))
+	fmt.Println(c.Path, "Exist", file_is_exists(c.Path))
 }
