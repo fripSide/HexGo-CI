@@ -1,2 +1,2 @@
 # HexGo-CI
-https://travis-ci.com/fripSide/HexGo-CI.svg?branch=master
+![Build Status](https://travis-ci.com/fripSide/HexGo-CI.svg?branch=master)
