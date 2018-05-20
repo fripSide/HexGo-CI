@@ -11,7 +11,8 @@ before_install:
   - git ls-files
   - git checkout master
   - mv conf ../conf
-
+  - cd ..
+  - rm -rf poor-wiki
 # sudo: true
 
 script:
