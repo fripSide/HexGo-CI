@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="/static/images/icon.png">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css">
+    
+    <title></title>
+</head>
+<body>
+<script>
+    if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent))
+    {
+        document.body.classList.add('mobile');
+    }
+</script>
+<header>
+    <nav>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <label for="nav-toggle">
+                <span class="menu-icon">
+                    <svg viewBox="0 0 18 15" width="18px" height="15px">
+                        <path fill="white"
+                              d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                        <path fill="white"
+                              d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                        <path fill="white"
+                              d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                   </svg>
+              </span>
+        </label>
+        <a class="title" href="/">码农大陆 World of CodeMonkey</a>
+        <div class="nav-item">
+            <ul class="nav-start">
+            <li><a href="/lang">编程语言</a></li>
+            <li><a href="/game">游戏编程</a></li>
+            <li><a href="/book">读书笔记</a></li>
+            </ul>
+            <ul class="nav-end">
+                <li><a href="/about">关于</a></li>
+                <li><a href="#">捐赠</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+<div class="container">
+<div class="inner">
+
+<h1><a name="2-7-并发" class="anchor" href="#2-7-%E5%B9%B6%E5%8F%91" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.7 并发</h1>
+
+<p>有人把Go比作21世纪的C语言，第一是因为Go语言设计简单，第二，21世纪最重要的就是并行程序设计，而Go从语言层面就支持了并行。</p>
+<h2><a name="goroutine" class="anchor" href="#goroutine" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+goroutine</h2>
+
+<p>goroutine是Go并行设计的核心。goroutine说到底其实就是协程，但是它比线程更小，十几个goroutine可能体现在底层就是五六个线程，Go语言内部帮你实现了这些goroutine之间的内存共享。执行goroutine只需极少的栈内存(大概是4~5KB)，当然会根据相应的数据伸缩。也正因为如此，可同时运行成千上万个并发任务。goroutine比thread更易用、更高效、更轻便。</p>
+
+<p>goroutine是通过Go的runtime管理的一个线程管理器。goroutine通过<code>go</code>关键字实现了，其实就是一个普通的函数。</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">go</span> <span class="n">hello</span><span class="n">(</span><span class="n">a</span><span class="n">,</span> <span class="n">b</span><span class="n">,</span> <span class="n">c</span><span class="n">)</span>
+</pre></div>
+
+<p>通过关键字go就启动了一个goroutine。我们来看一个例子</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="n">(</span>
+    <span class="s">&#34;fmt&#34;</span>
+    <span class="s">&#34;runtime&#34;</span>
+<span class="n">)</span>
+
+<span class="k">func</span> <span class="n">say</span><span class="n">(</span><span class="n">s</span> <span class="n">string</span><span class="n">)</span> <span class="n">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">i</span> <span class="k">&lt;</span> <span class="m">5</span><span class="n">;</span> <span class="n">i</span><span class="k">++</span> <span class="n">{</span>
+        <span class="n">runtime</span><span class="n">.</span><span class="n">Gosched</span><span class="n">(</span><span class="n">)</span>
+        <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">s</span><span class="n">)</span>
+    <span class="n">}</span>
+<span class="n">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="k">go</span> <span class="n">say</span><span class="n">(</span><span class="s">&#34;world&#34;</span><span class="n">)</span> <span class="c">//开一个新的Goroutines执行</span>
+    <span class="n">say</span><span class="n">(</span><span class="s">&#34;hello&#34;</span><span class="n">)</span> <span class="c">//当前Goroutines执行</span>
+<span class="n">}</span>
+
+<span class="c">// 以上程序执行后将输出：</span>
+<span class="c">// hello</span>
+<span class="c">// world</span>
+<span class="c">// hello</span>
+<span class="c">// world</span>
+<span class="c">// hello</span>
+<span class="c">// world</span>
+<span class="c">// hello</span>
+<span class="c">// world</span>
+<span class="c">// hello</span>
+</pre></div>
+
+<p>我们可以看到go关键字很方便的就实现了并发编程。
+上面的多个goroutine运行在同一个进程里面，共享内存数据，不过设计上我们要遵循：不要通过共享来通信，而要通过通信来共享。</p>
+
+<blockquote>
+<p>runtime.Gosched()表示让CPU把时间片让给别人,下次某个时候继续恢复执行该goroutine。</p>
+
+<p>默认情况下，在Go 1.5将标识并发系统线程个数的runtime.GOMAXPROCS的初始值由1改为了运行环境的CPU核数。</p>
+</blockquote>
+
+<p>但在Go 1.5以前调度器仅使用单线程，也就是说只实现了并发。想要发挥多核处理器的并行，需要在我们的程序中显式调用 runtime.GOMAXPROCS(n) 告诉调度器同时使用多个线程。GOMAXPROCS 设置了同时运行逻辑代码的系统线程的最大数量，并返回之前的设置。如果n &lt; 1，不会改变当前设置。</p>
+<h2><a name="channels" class="anchor" href="#channels" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+channels</h2>
+
+<p>goroutine运行在相同的地址空间，因此访问共享内存必须做好同步。那么goroutine之间如何进行数据的通信呢，Go提供了一个很好的通信机制channel。channel可以与Unix shell 中的双向管道做类比：可以通过它发送或者接收值。这些值只能是特定的类型：channel类型。定义一个channel时，也需要定义发送到channel的值的类型。注意，必须使用make 创建channel：</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="n">ci</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">)</span>
+<span class="n">cs</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">string</span><span class="n">)</span>
+<span class="n">cf</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="k">interface</span><span class="n">{</span><span class="n">}</span><span class="n">)</span>
+</pre></div>
+
+<p>channel通过操作符<code>&lt;-</code>来接收和发送数据</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="n">ch</span> <span class="k">&lt;-</span> <span class="n">v</span>    <span class="c">// 发送v到channel ch.</span>
+<span class="n">v</span> <span class="k">:=</span> <span class="k">&lt;-</span><span class="n">ch</span>  <span class="c">// 从ch中接收数据，并赋值给v</span>
+</pre></div>
+
+<p>我们把这些应用到我们的例子中来：</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">&#34;fmt&#34;</span>
+
+<span class="k">func</span> <span class="n">sum</span><span class="n">(</span><span class="n">a</span> <span class="n">[</span><span class="n">]</span><span class="n">int</span><span class="n">,</span> <span class="n">c</span> <span class="k">chan</span> <span class="n">int</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">total</span> <span class="k">:=</span> <span class="m">0</span>
+    <span class="k">for</span> <span class="n">_</span><span class="n">,</span> <span class="n">v</span> <span class="k">:=</span> <span class="k">range</span> <span class="n">a</span> <span class="n">{</span>
+        <span class="n">total</span> <span class="k">+=</span> <span class="n">v</span>
+    <span class="n">}</span>
+    <span class="n">c</span> <span class="k">&lt;-</span> <span class="n">total</span>  <span class="c">// send total to c</span>
+<span class="n">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">a</span> <span class="k">:=</span> <span class="n">[</span><span class="n">]</span><span class="n">int</span><span class="n">{</span><span class="m">7</span><span class="n">,</span> <span class="m">2</span><span class="n">,</span> <span class="m">8</span><span class="n">,</span> <span class="k">-</span><span class="m">9</span><span class="n">,</span> <span class="m">4</span><span class="n">,</span> <span class="m">0</span><span class="n">}</span>
+
+    <span class="n">c</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">)</span>
+    <span class="k">go</span> <span class="n">sum</span><span class="n">(</span><span class="n">a</span><span class="n">[</span><span class="n">:</span><span class="n">len</span><span class="n">(</span><span class="n">a</span><span class="n">)</span><span class="k">/</span><span class="m">2</span><span class="n">]</span><span class="n">,</span> <span class="n">c</span><span class="n">)</span>
+    <span class="k">go</span> <span class="n">sum</span><span class="n">(</span><span class="n">a</span><span class="n">[</span><span class="n">len</span><span class="n">(</span><span class="n">a</span><span class="n">)</span><span class="k">/</span><span class="m">2</span><span class="n">:</span><span class="n">]</span><span class="n">,</span> <span class="n">c</span><span class="n">)</span>
+    <span class="n">x</span><span class="n">,</span> <span class="n">y</span> <span class="k">:=</span> <span class="k">&lt;-</span><span class="n">c</span><span class="n">,</span> <span class="k">&lt;-</span><span class="n">c</span>  <span class="c">// receive from c</span>
+
+    <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">x</span><span class="n">,</span> <span class="n">y</span><span class="n">,</span> <span class="n">x</span> <span class="k">+</span> <span class="n">y</span><span class="n">)</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>默认情况下，channel接收和发送数据都是阻塞的，除非另一端已经准备好，这样就使得Goroutines同步变的更加的简单，而不需要显式的lock。所谓阻塞，也就是如果读取（value := &lt;-ch）它将会被阻塞，直到有数据接收。其次，任何发送（ch&lt;-5）将会被阻塞，直到数据被读出。无缓冲channel是在多个goroutine之间同步很棒的工具。</p>
+<h2><a name="buffered-channels" class="anchor" href="#buffered-channels" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Buffered Channels</h2>
+
+<p>上面我们介绍了默认的非缓存类型的channel，不过Go也允许指定channel的缓冲大小，很简单，就是channel可以存储多少元素。ch:= make(chan bool, 4)，创建了可以存储4个元素的bool 型channel。在这个channel 中，前4个元素可以无阻塞的写入。当写入第5个元素时，代码将会阻塞，直到其他goroutine从channel 中读取一些元素，腾出空间。</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="n">ch</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="k">type</span><span class="n">,</span> <span class="n">value</span><span class="n">)</span>
+</pre></div>
+
+<p>当 value = 0 时，channel 是无缓冲阻塞读写的，当value &gt; 0 时，channel 有缓冲、是非阻塞的，直到写满 value 个元素才阻塞写入。</p>
+
+<p>我们看一下下面这个例子，你可以在自己本机测试一下，修改相应的value值</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">&#34;fmt&#34;</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">c</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">,</span> <span class="m">2</span><span class="n">)</span><span class="c">//修改2为1就报错，修改2为3可以正常运行</span>
+    <span class="n">c</span> <span class="k">&lt;-</span> <span class="m">1</span>
+    <span class="n">c</span> <span class="k">&lt;-</span> <span class="m">2</span>
+    <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="k">&lt;-</span><span class="n">c</span><span class="n">)</span>
+    <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="k">&lt;-</span><span class="n">c</span><span class="n">)</span>
+<span class="n">}</span>
+        <span class="c">//修改为1报如下的错误:</span>
+        <span class="c">//fatal error: all goroutines are asleep - deadlock!</span>
+</pre></div>
+<h2><a name="range和close" class="anchor" href="#range%E5%92%8Cclose" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Range和Close</h2>
+
+<p>上面这个例子中，我们需要读取两次c，这样不是很方便，Go考虑到了这一点，所以也可以通过range，像操作slice或者map一样操作缓存类型的channel，请看下面的例子</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="n">(</span>
+    <span class="s">&#34;fmt&#34;</span>
+<span class="n">)</span>
+
+<span class="k">func</span> <span class="n">fibonacci</span><span class="n">(</span><span class="n">n</span> <span class="n">int</span><span class="n">,</span> <span class="n">c</span> <span class="k">chan</span> <span class="n">int</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">x</span><span class="n">,</span> <span class="n">y</span> <span class="k">:=</span> <span class="m">1</span><span class="n">,</span> <span class="m">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">i</span> <span class="k">&lt;</span> <span class="n">n</span><span class="n">;</span> <span class="n">i</span><span class="k">++</span> <span class="n">{</span>
+        <span class="n">c</span> <span class="k">&lt;-</span> <span class="n">x</span>
+        <span class="n">x</span><span class="n">,</span> <span class="n">y</span> <span class="k">=</span> <span class="n">y</span><span class="n">,</span> <span class="n">x</span> <span class="k">+</span> <span class="n">y</span>
+    <span class="n">}</span>
+    <span class="n">close</span><span class="n">(</span><span class="n">c</span><span class="n">)</span>
+<span class="n">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">c</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">,</span> <span class="m">10</span><span class="n">)</span>
+    <span class="k">go</span> <span class="n">fibonacci</span><span class="n">(</span><span class="n">cap</span><span class="n">(</span><span class="n">c</span><span class="n">)</span><span class="n">,</span> <span class="n">c</span><span class="n">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="k">range</span> <span class="n">c</span> <span class="n">{</span>
+        <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">i</span><span class="n">)</span>
+    <span class="n">}</span>
+<span class="n">}</span>
+</pre></div>
+
+<p><code>for i := range c</code>能够不断的读取channel里面的数据，直到该channel被显式的关闭。上面代码我们看到可以显式的关闭channel，生产者通过内置函数<code>close</code>关闭channel。关闭channel之后就无法再发送任何数据了，在消费方可以通过语法<code>v, ok := &lt;-ch</code>测试channel是否被关闭。如果ok返回false，那么说明channel已经没有任何数据并且已经被关闭。</p>
+
+<blockquote>
+<p>记住应该在生产者的地方关闭channel，而不是消费的地方去关闭它，这样容易引起panic</p>
+
+<p>另外记住一点的就是channel不像文件之类的，不需要经常去关闭，只有当你确实没有任何发送数据了，或者你想显式的结束range循环之类的</p>
+</blockquote>
+<h2><a name="select" class="anchor" href="#select" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+Select</h2>
+
+<p>我们上面介绍的都是只有一个channel的情况，那么如果存在多个channel的时候，我们该如何操作呢，Go里面提供了一个关键字<code>select</code>，通过<code>select</code>可以监听channel上的数据流动。</p>
+
+<p><code>select</code>默认是阻塞的，只有当监听的channel中有发送或接收可以进行时才会运行，当多个channel都准备好的时候，select是随机的选择一个执行的。</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">&#34;fmt&#34;</span>
+
+<span class="k">func</span> <span class="n">fibonacci</span><span class="n">(</span><span class="n">c</span><span class="n">,</span> <span class="n">quit</span> <span class="k">chan</span> <span class="n">int</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">x</span><span class="n">,</span> <span class="n">y</span> <span class="k">:=</span> <span class="m">1</span><span class="n">,</span> <span class="m">1</span>
+    <span class="k">for</span> <span class="n">{</span>
+        <span class="k">select</span> <span class="n">{</span>
+        <span class="k">case</span> <span class="n">c</span> <span class="k">&lt;-</span> <span class="n">x</span><span class="n">:</span>
+            <span class="n">x</span><span class="n">,</span> <span class="n">y</span> <span class="k">=</span> <span class="n">y</span><span class="n">,</span> <span class="n">x</span> <span class="k">+</span> <span class="n">y</span>
+        <span class="k">case</span> <span class="k">&lt;-</span><span class="n">quit</span><span class="n">:</span>
+            <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="s">&#34;quit&#34;</span><span class="n">)</span>
+            <span class="k">return</span>
+        <span class="n">}</span>
+    <span class="n">}</span>
+<span class="n">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">c</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">)</span>
+    <span class="n">quit</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">)</span>
+    <span class="k">go</span> <span class="k">func</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="k">:=</span> <span class="m">0</span><span class="n">;</span> <span class="n">i</span> <span class="k">&lt;</span> <span class="m">10</span><span class="n">;</span> <span class="n">i</span><span class="k">++</span> <span class="n">{</span>
+            <span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="k">&lt;-</span><span class="n">c</span><span class="n">)</span>
+        <span class="n">}</span>
+        <span class="n">quit</span> <span class="k">&lt;-</span> <span class="m">0</span>
+    <span class="n">}</span><span class="n">(</span><span class="n">)</span>
+    <span class="n">fibonacci</span><span class="n">(</span><span class="n">c</span><span class="n">,</span> <span class="n">quit</span><span class="n">)</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>在<code>select</code>里面还有default语法，<code>select</code>其实就是类似switch的功能，default就是当监听的channel都没有准备好的时候，默认执行的（select不再阻塞等待channel）。</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">select</span> <span class="n">{</span>
+<span class="k">case</span> <span class="n">i</span> <span class="k">:=</span> <span class="k">&lt;-</span><span class="n">c</span><span class="n">:</span>
+    <span class="c">// use i</span>
+<span class="k">default</span><span class="n">:</span>
+    <span class="c">// 当c阻塞的时候执行这里</span>
+<span class="n">}</span>
+</pre></div>
+<h2><a name="超时" class="anchor" href="#%E8%B6%85%E6%97%B6" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+超时</h2>
+
+<p>有时候会出现goroutine阻塞的情况，那么我们如何避免整个程序进入阻塞的情况呢？我们可以利用select来设置超时，通过如下的方式实现：</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+    <span class="n">c</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">int</span><span class="n">)</span>
+    <span class="n">o</span> <span class="k">:=</span> <span class="n">make</span><span class="n">(</span><span class="k">chan</span> <span class="n">bool</span><span class="n">)</span>
+    <span class="k">go</span> <span class="k">func</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+        <span class="k">for</span> <span class="n">{</span>
+            <span class="k">select</span> <span class="n">{</span>
+                <span class="k">case</span> <span class="n">v</span> <span class="k">:=</span> <span class="k">&lt;-</span> <span class="n">c</span><span class="n">:</span>
+                    <span class="n">println</span><span class="n">(</span><span class="n">v</span><span class="n">)</span>
+                <span class="k">case</span> <span class="k">&lt;-</span> <span class="n">time</span><span class="n">.</span><span class="n">After</span><span class="n">(</span><span class="m">5</span> <span class="k">*</span> <span class="n">time</span><span class="n">.</span><span class="n">Second</span><span class="n">)</span><span class="n">:</span>
+                    <span class="n">println</span><span class="n">(</span><span class="s">&#34;timeout&#34;</span><span class="n">)</span>
+                    <span class="n">o</span> <span class="k">&lt;-</span> <span class="o">true</span>
+                    <span class="k">break</span>
+            <span class="n">}</span>
+        <span class="n">}</span>
+    <span class="n">}</span><span class="n">(</span><span class="n">)</span>
+    <span class="k">&lt;-</span> <span class="n">o</span>
+<span class="n">}</span>
+</pre></div>
+<h2><a name="runtime-goroutine" class="anchor" href="#runtime-goroutine" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+runtime goroutine</h2>
+
+<p>runtime包中有几个处理goroutine的函数：</p>
+
+<ul>
+<li><p>Goexit</p>
+
+<p>退出当前执行的goroutine，但是defer函数还会继续调用</p></li>
+
+<li><p>Gosched</p>
+
+<p>让出当前goroutine的执行权限，调度器安排其他等待的任务运行，并在下次某个时候从该位置恢复执行。</p></li>
+
+<li><p>NumCPU</p>
+
+<p>返回 CPU 核数量</p></li>
+
+<li><p>NumGoroutine</p>
+
+<p>返回正在执行和排队的任务总数</p></li>
+
+<li><p>GOMAXPROCS</p>
+
+<p>用来设置可以并行计算的CPU核数的最大值，并返回之前的值。</p></li>
+</ul>
+<h2><a name="links" class="anchor" href="#links" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+links</h2>
+
+<ul>
+<li><a href="preface.md" rel="nofollow">目录</a></li>
+<li>上一章: <a href="/book/0day/1" rel="nofollow">interface</a></li>
+<li>下一节: <a href="/book/0day/3" rel="nofollow">总结</a></li>
+</ul>
+
+</div>
+</div>
+</main>
+<footer>
+    &copy; Copyright 2018 by 码农大陆 World of CodeMonkey.
+</footer>
+</body>
+</html>

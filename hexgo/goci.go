@@ -46,7 +46,6 @@ func LiveReload(h *HexGo) {
 	startServer := func() {
 		atomic.StoreInt32(&isStartFlag, 1)
 		once.Do(func() {
-
 			h.Run()
 		})
 	}

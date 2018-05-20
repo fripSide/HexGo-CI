@@ -1,0 +1,165 @@
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-size: 100%;
+  background: #f5f5d5;
+  height: 100%;
+  position: relative;
+  min-height: 100%;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #007fff;
+}
+
+main {
+  min-height: 82%;
+}
+
+footer {
+  margin: 15px 0;
+  width: 100%;
+  text-align: center;
+}
+
+html,
+body,
+ul,
+li,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header {
+  background: #AAD2F0;
+  border-bottom: 1px solid #f1f8ff;
+}
+header nav {
+  display: flex;
+  font-size: 1.15em;
+  align-items: center;
+  height: 50px;
+}
+header nav .nav-toggle {
+  display: none;
+}
+header nav .menu-icon {
+  display: none;
+}
+header nav .title {
+  margin-left: 10px;
+  color: green;
+}
+header nav .nav-item {
+  position: absolute;
+  left: 350px;
+  right: 50px;
+  display: flex;
+  align-items: center;
+}
+header nav .nav-start li, header nav .nav-end li {
+  display: inline-block;
+  padding: 0 10px;
+}
+header nav .nav-start li a.active, header nav .nav-end li a.active {
+  color: green;
+}
+header nav .nav-end {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 700px) {
+  header nav label[for=nav-toggle] {
+    display: block;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  header nav .menu-icon {
+    display: block;
+  }
+  header nav input ~ .nav-item {
+    clear: both;
+    display: none;
+  }
+  header nav input:checked ~ .nav-item {
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    background: #AAD2F0;
+    border: 1px solid #f1f8ff;
+    border-radius: 5px;
+  }
+  header nav input:checked ~ .nav-item li {
+    padding: 2px 5px;
+    display: block;
+  }
+}
+.container {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2em;
+}
+.container h1 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+}
+.container h2, .container h3, .container h4 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-bottom: 2px LightGrey solid;
+  color: #666666;
+}
+.container img {
+  max-width: 95%;
+  overflow: auto;
+  border: 0.15em solid #e0dfcc;
+  border-radius: 1em;
+}
+.container p, .container li {
+  line-height: 1.8;
+}
+.container blockquote {
+  border-left: 4px lightgrey solid;
+  padding-left: 5px;
+  margin-left: 20px;
+}
+.container pre {
+  margin: 10px 0;
+  font-family: Consolas, Monaco, "Andale Mono", monospace;
+  background-color: #F4F4F4;
+  border: 0.15em solid #E0E0E0;
+  border-radius: 4px;
+  padding: 5px;
+  line-height: 1.3;
+  display: block;
+  max-width: 95%;
+  overflow: auto;
+  color: black;
+  text-shadow: 0 1px white;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  font-size: 0.8em;
+}
+
+@media screen and (max-width: 700px) {
+  .container {
+    width: 90%;
+  }
+
+  main {
+    min-height: 76%;
+  }
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="/static/images/icon.png">
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css">
+    
+    <title></title>
+</head>
+<body>
+<script>
+    if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent))
+    {
+        document.body.classList.add('mobile');
+    }
+</script>
+<header>
+    <nav>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <label for="nav-toggle">
+                <span class="menu-icon">
+                    <svg viewBox="0 0 18 15" width="18px" height="15px">
+                        <path fill="white"
+                              d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                        <path fill="white"
+                              d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                        <path fill="white"
+                              d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                   </svg>
+              </span>
+        </label>
+        <a class="title" href="/">码农大陆 World of CodeMonkey</a>
+        <div class="nav-item">
+            <ul class="nav-start">
+            <li><a href="/lang">编程语言</a></li>
+            <li><a href="/game">游戏编程</a></li>
+            <li><a href="/book">读书笔记</a></li>
+            </ul>
+            <ul class="nav-end">
+                <li><a href="/about">关于</a></li>
+                <li><a href="#">捐赠</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+<div class="container">
+<div class="inner">
+
+<h1><a name="4-5-处理文件上传" class="anchor" href="#4-5-%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.5 处理文件上传</h1>
+
+<p>你想处理一个由用户上传的文件，比如你正在建设一个类似Instagram的网站，你需要存储用户拍摄的照片。这种需求该如何实现呢？</p>
+
+<p>要使表单能够上传文件，首先第一步就是要添加form的<code>enctype</code>属性，<code>enctype</code>属性有如下三种情况:</p>
+
+<pre><code>
+application/x-www-form-urlencoded   表示在发送前编码所有字符（默认）
+multipart/form-data	  不对字符编码。在使用包含文件上传控件的表单时，必须使用该值。
+text/plain	  空格转换为 &#34;+&#34; 加号，但不对特殊字符编码。
+</code></pre>
+
+<p>所以，创建新的表单html文件, 命名为upload.gtpl, html代码应该类似于:</p>
+
+<div class="highlight highlight-html"><pre>
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;上传文件&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form enctype=&#34;multipart/form-data&#34; action=&#34;/upload&#34; method=&#34;post&#34;&gt;
+  &lt;input type=&#34;file&#34; name=&#34;uploadfile&#34; /&gt;
+  &lt;input type=&#34;hidden&#34; name=&#34;token&#34; value=&#34;{{.}}&#34;/&gt;
+  &lt;input type=&#34;submit&#34; value=&#34;upload&#34; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+
+<p>在服务器端，我们增加一个handlerFunc:</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="n">http</span><span class="n">.</span><span class="n">HandleFunc</span><span class="n">(</span><span class="s">&#34;/upload&#34;</span><span class="n">,</span> <span class="n">upload</span><span class="n">)</span>
+
+<span class="c">// 处理/upload 逻辑</span>
+<span class="k">func</span> <span class="n">upload</span><span class="n">(</span><span class="n">w</span> <span class="n">http</span><span class="n">.</span><span class="n">ResponseWriter</span><span class="n">,</span> <span class="n">r</span> <span class="k">*</span><span class="n">http</span><span class="n">.</span><span class="n">Request</span><span class="n">)</span> <span class="n">{</span>
+	<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="s">&#34;method:&#34;</span><span class="n">,</span> <span class="n">r</span><span class="n">.</span><span class="n">Method</span><span class="n">)</span> <span class="c">//获取请求的方法</span>
+	<span class="k">if</span> <span class="n">r</span><span class="n">.</span><span class="n">Method</span> <span class="k">==</span> <span class="s">&#34;GET&#34;</span> <span class="n">{</span>
+		<span class="n">crutime</span> <span class="k">:=</span> <span class="n">time</span><span class="n">.</span><span class="n">Now</span><span class="n">(</span><span class="n">)</span><span class="n">.</span><span class="n">Unix</span><span class="n">(</span><span class="n">)</span>
+		<span class="n">h</span> <span class="k">:=</span> <span class="n">md5</span><span class="n">.</span><span class="n">New</span><span class="n">(</span><span class="n">)</span>
+		<span class="n">io</span><span class="n">.</span><span class="n">WriteString</span><span class="n">(</span><span class="n">h</span><span class="n">,</span> <span class="n">strconv</span><span class="n">.</span><span class="n">FormatInt</span><span class="n">(</span><span class="n">crutime</span><span class="n">,</span> <span class="m">10</span><span class="n">)</span><span class="n">)</span>
+		<span class="n">token</span> <span class="k">:=</span> <span class="n">fmt</span><span class="n">.</span><span class="n">Sprintf</span><span class="n">(</span><span class="s">&#34;%x&#34;</span><span class="n">,</span> <span class="n">h</span><span class="n">.</span><span class="n">Sum</span><span class="n">(</span><span class="o">nil</span><span class="n">)</span><span class="n">)</span>
+
+		<span class="n">t</span><span class="n">,</span> <span class="n">_</span> <span class="k">:=</span> <span class="n">template</span><span class="n">.</span><span class="n">ParseFiles</span><span class="n">(</span><span class="s">&#34;upload.gtpl&#34;</span><span class="n">)</span>
+		<span class="n">t</span><span class="n">.</span><span class="n">Execute</span><span class="n">(</span><span class="n">w</span><span class="n">,</span> <span class="n">token</span><span class="n">)</span>
+	<span class="n">}</span> <span class="k">else</span> <span class="n">{</span>
+		<span class="n">r</span><span class="n">.</span><span class="n">ParseMultipartForm</span><span class="n">(</span><span class="m">32</span> <span class="k">&lt;&lt;</span> <span class="m">20</span><span class="n">)</span>
+		<span class="n">file</span><span class="n">,</span> <span class="n">handler</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">r</span><span class="n">.</span><span class="n">FormFile</span><span class="n">(</span><span class="s">&#34;uploadfile&#34;</span><span class="n">)</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+			<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">err</span><span class="n">)</span>
+			<span class="k">return</span>
+		<span class="n">}</span>
+		<span class="k">defer</span> <span class="n">file</span><span class="n">.</span><span class="n">Close</span><span class="n">(</span><span class="n">)</span>
+		<span class="n">fmt</span><span class="n">.</span><span class="n">Fprintf</span><span class="n">(</span><span class="n">w</span><span class="n">,</span> <span class="s">&#34;%v&#34;</span><span class="n">,</span> <span class="n">handler</span><span class="n">.</span><span class="n">Header</span><span class="n">)</span>
+		<span class="n">f</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">os</span><span class="n">.</span><span class="n">OpenFile</span><span class="n">(</span><span class="s">&#34;./test/&#34;</span><span class="k">+</span><span class="n">handler</span><span class="n">.</span><span class="n">Filename</span><span class="n">,</span> <span class="n">os</span><span class="n">.</span><span class="n">O_WRONLY</span><span class="k">|</span><span class="n">os</span><span class="n">.</span><span class="n">O_CREATE</span><span class="n">,</span> <span class="m">0666</span><span class="n">)</span>  <span class="c">// 此处假设当前目录下已存在test目录</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+			<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">err</span><span class="n">)</span>
+			<span class="k">return</span>
+		<span class="n">}</span>
+		<span class="k">defer</span> <span class="n">f</span><span class="n">.</span><span class="n">Close</span><span class="n">(</span><span class="n">)</span>
+		<span class="n">io</span><span class="n">.</span><span class="n">Copy</span><span class="n">(</span><span class="n">f</span><span class="n">,</span> <span class="n">file</span><span class="n">)</span>
+	<span class="n">}</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>通过上面的代码可以看到，处理文件上传我们需要调用<code>r.ParseMultipartForm</code>，里面的参数表示<code>maxMemory</code>，调用<code>ParseMultipartForm</code>之后，上传的文件存储在<code>maxMemory</code>大小的内存里面，如果文件大小超过了<code>maxMemory</code>，那么剩下的部分将存储在系统的临时文件中。我们可以通过<code>r.FormFile</code>获取上面的文件句柄，然后实例中使用了<code>io.Copy</code>来存储文件。</p>
+
+<blockquote>
+<p>获取其他非文件字段信息的时候就不需要调用<code>r.ParseForm</code>，因为在需要的时候Go自动会去调用。而且<code>ParseMultipartForm</code>调用一次之后，后面再次调用不会再有效果。</p>
+</blockquote>
+
+<p>通过上面的实例我们可以看到我们上传文件主要三步处理：</p>
+
+<ol>
+<li>表单中增加enctype=&#34;multipart/form-data&#34;</li>
+<li>服务端调用<code>r.ParseMultipartForm</code>,把上传的文件存储在内存和临时文件中</li>
+<li>使用<code>r.FormFile</code>获取文件句柄，然后对文件进行存储等处理。</li>
+</ol>
+
+<p>文件handler是multipart.FileHeader,里面存储了如下结构信息</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">type</span> <span class="n">FileHeader</span> <span class="k">struct</span> <span class="n">{</span>
+	<span class="n">Filename</span> <span class="n">string</span>
+	<span class="n">Header</span>   <span class="n">textproto</span><span class="n">.</span><span class="n">MIMEHeader</span>
+	<span class="c">// contains filtered or unexported fields</span>
+<span class="n">}</span>
+</pre></div>
+
+<p>我们通过上面的实例代码打印出来上传文件的信息如下</p>
+
+<p><img src="/image/moba/4.5.upload2.png?raw=true" alt=""></p>
+
+<p>图4.5 打印文件上传后服务器端接受的信息</p>
+<h2><a name="客户端上传文件" class="anchor" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+客户端上传文件</h2>
+
+<p>我们上面的例子演示了如何通过表单上传文件，然后在服务器端处理文件，其实Go支持模拟客户端表单功能支持文件上传，详细用法请看如下示例：</p>
+
+<div class="highlight highlight-Go"><pre>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="n">(</span>
+	<span class="s">&#34;bytes&#34;</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;io&#34;</span>
+	<span class="s">&#34;io/ioutil&#34;</span>
+	<span class="s">&#34;mime/multipart&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+<span class="n">)</span>
+
+<span class="k">func</span> <span class="n">postFile</span><span class="n">(</span><span class="n">filename</span> <span class="n">string</span><span class="n">,</span> <span class="n">targetUrl</span> <span class="n">string</span><span class="n">)</span> <span class="n">error</span> <span class="n">{</span>
+	<span class="n">bodyBuf</span> <span class="k">:=</span> <span class="k">&amp;</span><span class="n">bytes</span><span class="n">.</span><span class="n">Buffer</span><span class="n">{</span><span class="n">}</span>
+	<span class="n">bodyWriter</span> <span class="k">:=</span> <span class="n">multipart</span><span class="n">.</span><span class="n">NewWriter</span><span class="n">(</span><span class="n">bodyBuf</span><span class="n">)</span>
+
+	<span class="c">//关键的一步操作</span>
+	<span class="n">fileWriter</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">bodyWriter</span><span class="n">.</span><span class="n">CreateFormFile</span><span class="n">(</span><span class="s">&#34;uploadfile&#34;</span><span class="n">,</span> <span class="n">filename</span><span class="n">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+		<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="s">&#34;error writing to buffer&#34;</span><span class="n">)</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="n">}</span>
+
+	<span class="c">//打开文件句柄操作</span>
+	<span class="n">fh</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">os</span><span class="n">.</span><span class="n">Open</span><span class="n">(</span><span class="n">filename</span><span class="n">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+		<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="s">&#34;error opening file&#34;</span><span class="n">)</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="n">}</span>
+	<span class="k">defer</span> <span class="n">fh</span><span class="n">.</span><span class="n">Close</span><span class="n">(</span><span class="n">)</span>
+	
+	<span class="c">//iocopy</span>
+	<span class="n">_</span><span class="n">,</span> <span class="n">err</span> <span class="k">=</span> <span class="n">io</span><span class="n">.</span><span class="n">Copy</span><span class="n">(</span><span class="n">fileWriter</span><span class="n">,</span> <span class="n">fh</span><span class="n">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="n">}</span>
+
+	<span class="n">contentType</span> <span class="k">:=</span> <span class="n">bodyWriter</span><span class="n">.</span><span class="n">FormDataContentType</span><span class="n">(</span><span class="n">)</span>
+	<span class="n">bodyWriter</span><span class="n">.</span><span class="n">Close</span><span class="n">(</span><span class="n">)</span>
+
+	<span class="n">resp</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">http</span><span class="n">.</span><span class="n">Post</span><span class="n">(</span><span class="n">targetUrl</span><span class="n">,</span> <span class="n">contentType</span><span class="n">,</span> <span class="n">bodyBuf</span><span class="n">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="n">}</span>
+	<span class="k">defer</span> <span class="n">resp</span><span class="n">.</span><span class="n">Body</span><span class="n">.</span><span class="n">Close</span><span class="n">(</span><span class="n">)</span>
+	<span class="n">resp_body</span><span class="n">,</span> <span class="n">err</span> <span class="k">:=</span> <span class="n">ioutil</span><span class="n">.</span><span class="n">ReadAll</span><span class="n">(</span><span class="n">resp</span><span class="n">.</span><span class="n">Body</span><span class="n">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="k">!=</span> <span class="o">nil</span> <span class="n">{</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="n">}</span>
+	<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">resp</span><span class="n">.</span><span class="n">Status</span><span class="n">)</span>
+	<span class="n">fmt</span><span class="n">.</span><span class="n">Println</span><span class="n">(</span><span class="n">string</span><span class="n">(</span><span class="n">resp_body</span><span class="n">)</span><span class="n">)</span>
+	<span class="k">return</span> <span class="o">nil</span>
+<span class="n">}</span>
+
+<span class="c">// sample usage</span>
+<span class="k">func</span> <span class="n">main</span><span class="n">(</span><span class="n">)</span> <span class="n">{</span>
+	<span class="n">target_url</span> <span class="k">:=</span> <span class="s">&#34;http://localhost:9090/upload&#34;</span>
+	<span class="n">filename</span> <span class="k">:=</span> <span class="s">&#34;./astaxie.pdf&#34;</span>
+	<span class="n">postFile</span><span class="n">(</span><span class="n">filename</span><span class="n">,</span> <span class="n">target_url</span><span class="n">)</span>
+<span class="n">}</span>
+
+</pre></div>
+
+<p>上面的例子详细展示了客户端如何向服务器上传一个文件的例子，客户端通过multipart.Write把文件的文本流写入一个缓存中，然后调用http的Post方法把缓存传到服务器。</p>
+
+<blockquote>
+<p>如果你还有其他普通字段例如username之类的需要同时写入，那么可以调用multipart的WriteField方法写很多其他类似的字段。</p>
+</blockquote>
+<h2><a name="links" class="anchor" href="#links" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+links</h2>
+
+<ul>
+<li><a href="preface.md" rel="nofollow">目录</a></li>
+<li>上一节: <a href="/game/moba/4" rel="nofollow">防止多次递交表单</a></li>
+<li>下一节: <a href="/game/moba/6" rel="nofollow">小结</a></li>
+</ul>
+
+</div>
+</div>
+</main>
+<footer>
+    &copy; Copyright 2018 by 码农大陆 World of CodeMonkey.
+</footer>
+</body>
+</html>

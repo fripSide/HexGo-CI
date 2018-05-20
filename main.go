@@ -47,7 +47,7 @@ func GenBookCache() *hexgo.BlogTheme {
 }
 
 func Dev() {
-	h := hexgo.CreateApp(":8888")
+	h := hexgo.CreateApp(":8080")
 	theme := GenBookCache()
 	h.SetupFunc = func() {
 		fmt.Println("Restart Func")
@@ -71,7 +71,7 @@ func Dev() {
 }
 
 func main() {
-	action := flag.String("action", "gen", "-action [dev] or [gen]")
+	action := flag.String("action", "dev", "-action [dev] or [gen]")
 	flag.Parse()
 	if *action == "gen" {
 		GenBookCache()
