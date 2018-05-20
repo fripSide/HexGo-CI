@@ -5,6 +5,7 @@ go:
 
 before_install:
   - rm -rf poor-wiki
+  - rm -rf conf
   - git clone "https://${CONF_TOKEN}@github.com/HyanCat/poor-wiki.git" 
   - cd poor-wiki
   - git ls-files
