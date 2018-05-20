@@ -16,6 +16,13 @@ import (
 TODO:
 1. 更换 template，写出一套好看的前端。
 http://lewis.suclub.cn/about/
+
+
+共三种页面：
+Domain Cover
+Book Cover
+Page (某一章节，或者 关于 这类单独的页面)
+
  */
 
 type object = interface{}

@@ -4,13 +4,13 @@ go:
   - "1.10"
 
 before_install:
-  - rm -rf conf
+  - rm -rf blog
   - git clone "https://${CONF_TOKEN}@github.com/HyanCat/poor-wiki.git" 
   - cd poor-wiki
   - pwd
   - git ls-files
   - git checkout master
-  - mv conf ../conf
+  - mv blog ../blog
   - cd ..
   - rm -rf poor-wiki
 # sudo: true

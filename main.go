@@ -2,8 +2,8 @@ package main
 
 import (
 	//"strconv"
-	"github.com/fripSide/HexGo-CI/hexgo"
-	//"HexGo-CI/hexgo"
+	//"github.com/fripSide/HexGo-CI/hexgo"
+	"HexGo-CI/hexgo"
 	"os"
 	"fmt"
 	"io/ioutil"
@@ -19,6 +19,7 @@ TODO:
 4. 集成CI并部署。
 
 速度上线，用约定俗成来代替配置。
+
  */
 const (
 	workDir = "/Users/fripside/Go/src/HexGo/"
@@ -40,7 +41,8 @@ func GenBookCache() *hexgo.BlogTheme {
 	}
     fmt.Println("Run Build In: ", dir)
 	//fmt.Println("Book Content: ", bookList.Books["go/"].Content)
-	confDir := path.Join(dir, "conf")
+	//confDir := path.Join(dir, "conf")
+	confDir := dir
 	cacheDir := path.Join(dir, "cache")
 	theme := hexgo.NewBlogTheme(confDir, cacheDir)
 	return theme
