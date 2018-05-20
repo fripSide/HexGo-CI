@@ -73,13 +73,15 @@ func (theme *BlogTheme) buildBlog() {
 	theme.cache = make(map[string]*PageCache)
 	theme.RequestMap = make(map[string][]byte)
 	theme.commonLinks = make(map[string]object)
-	// commonLinks
+
+	// pages
 	pageLinks := make(map[string]map[string]string)
 	for i := range blog.Pages {
 		page := &blog.Pages[i]
 		pageLinks[page.Title] = page.ToParamsMap()
 	}
 
+	// commonLinks
 	theme.commonLinks["Pages"] = &pageLinks
 	domainLinks := make([]object, 0)
 	for i := range blog.Domains {
@@ -100,6 +102,7 @@ func (theme *BlogTheme) buildPages(blog *BlogList) {
 	params["Links"] = &theme.commonLinks
 	for i := range blog.Pages {
 		page := &blog.Pages[i]
+		params["CurDomain"] = page.Title
 		params["Title"] = page.Title
 		params["Content"] = T.HTML(page.Md)
 		pageHtml := theme.executeTpl("page", params)
@@ -114,6 +117,7 @@ func (theme *BlogTheme) buildDomain(domain *DomainConf) {
 	params := make(map[string]object)
 	params["Links"] = &theme.commonLinks
 	params["Title"] = domain.Link.Title
+	params["CurDomain"] = domain.Link.Title
 	bookLinks := make([]object, 0)
 	for i := range domain.Books {
 		book := &domain.Books[i]
@@ -126,16 +130,17 @@ func (theme *BlogTheme) buildDomain(domain *DomainConf) {
 	pageHtml := theme.executeTpl("domain", params)
 	theme.genPageCache(&domain.Link, pageHtml)
 	for i := range domain.Books {
-		theme.buildBook(&domain.Books[i])
+		theme.buildBook(&domain.Books[i], domain.Link.Title)
 	}
 }
 
-func (theme *BlogTheme) buildBook(book *BookConf) {
+func (theme *BlogTheme) buildBook(book *BookConf, domainTitle string) {
 	// book cover
 	params := make(map[string]object)
 	params["Links"] = &theme.commonLinks
 	params["Cover"] = book.Cover
 	params["Desc"] = book.Desc
+	params["CurDomain"] = domainTitle
 	chapterLinks := make([]object, 0)
 	for i := range book.Chapters {
 		chapter := &book.Chapters[i]
@@ -148,6 +153,7 @@ func (theme *BlogTheme) buildBook(book *BookConf) {
 	theme.genPageCache(&book.Link, coverHtml)
 	theme.copyImages(&book.Link)
 
+	params["UseComment"] = true
 	// book page
 	for i := range book.Chapters {
 		chapter := &book.Chapters[i]
