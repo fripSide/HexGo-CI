@@ -4,13 +4,12 @@ go:
   - "1.10"
 
 before_install:
-  - rm -rf poor-wiki
   - rm -rf conf
   - git clone "https://${CONF_TOKEN}@github.com/HyanCat/poor-wiki.git" 
   - cd poor-wiki
   - git ls-files
   - git checkout master
-  - mv poor-wiki/hexgo/conf conf/
+  - mv Hexgo/conf conf/
 
 # sudo: true
 
