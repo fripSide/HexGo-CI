@@ -2,7 +2,8 @@ package main
 
 import (
 	//"strconv"
-	"github.com/fripSide/HexGo-CI/hexgo"
+	//"github.com/fripSide/HexGo-CI/hexgo"
+	"HexGo-CI/hexgo"
 	"os"
 	"fmt"
 	"io/ioutil"
