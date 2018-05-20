@@ -9,7 +9,7 @@ before_install:
   - cd poor-wiki
   - git ls-files
   - git checkout master
-  - mv Hexgo/conf conf/
+  - mv HexGo/conf conf/
 
 # sudo: true
 
