@@ -1,35 +1,6 @@
-language: go
+language: bash
 
-go:
-  - "1.10"
-
-before_install:
-  - rm -rf blog
-  - git clone "https://${CONF_TOKEN}@github.com/HyanCat/poor-wiki.git" 
-  - cd poor-wiki
-  - pwd
-  - git ls-files
-  - git checkout master
-  - mv blog ../blog
-  - cd ..
-  - rm -rf poor-wiki
-# sudo: true
+sudo: required
 
 script:
-  - rm -rf cache
-  - mkdir cache
-  - go run main.go -action gen
-
-after_success:
-  - cd ./cache
-  - ls
-  - git init
-#  - git config user.name 'Travis CI'
-#  - git config user.email 'travis@travis-ci.com'
-  - git add .
-#  - git ls-files
-  - export GIT_MSG=build-$TRAVIS_BRANCH-$(date -u "+%Y:%m:%d-%H:%M:%S")-$TRAVIS_BUILD_NUMBER
-  - git commit -m $GIT_MSG
-#  - git commit -m "gen now"
-  - git push --force --quiet "https://${GH_TOKEN}@github.com/fripSide/fripSide.github.io.git" master:master
-
+    - chmod u+x bash bpf.sh
